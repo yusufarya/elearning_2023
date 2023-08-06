@@ -304,3 +304,31 @@ function getNamaHari($val)
 
     return $val;
 }
+// ADD BY YUSUF
+function getCurrentDay($val)
+{
+    switch ($val) {
+        case 'Monday':
+            $val = 'Senin';
+            break;
+        case 'Tuesday':
+            $val = 'Selasa';
+            break;
+        case 'Wednesday':
+            $val = 'Rabu';
+            break;
+        case 'Thursday':
+            $val = 'Kamis';
+            break;
+        case 'Friday':
+            $val = "Jum'at";
+            break;
+        case 'Saturday':
+            $val = 'Sabtu';
+            break;
+        case 'Sunday':
+            $val = 'Minggu';
+    }
+
+    return $val;
+}

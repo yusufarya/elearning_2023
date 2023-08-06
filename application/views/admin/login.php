@@ -112,6 +112,13 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                 <label for="password">Password</label>
             </div>
+            <div class="form-floating">
+                <select name="semester" id="semesster" class="form-select">
+                    <option value="01">GANJIL</option>
+                    <option value="02">GENAP</option>
+                </select>
+                <label for="semester">Semester</label>
+            </div>
 
             <div class="form-check text-start my-1">
             </div>

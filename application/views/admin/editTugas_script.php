@@ -24,11 +24,11 @@
             }, 3600)
         })
 
-        $('#pembahasan').val('<?= json_encode($materi['pembahasan']) ?>')
+        $('#deskripsi').val('<?= json_encode($tugas['deskripsi']) ?>')
     })
 
     function getPelajaran(thisValue) {
-        const val_pelajaran = <?= json_encode($materi['kode_pelajaran']) ?>;
+        const val_pelajaran = <?= json_encode($tugas['kode_pelajaran']) ?>;
         $('select#kode_pelajaran').empty()
         $.ajax({
             type: "POST",

@@ -37,6 +37,7 @@ class Login_admin extends CI_Controller
     {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
+        $semester = $this->input->post('semester');
 
         $users = $this->db->get_where('users', ['email' => $email, 'role_id <>' => 3])->row_array();
         // print_r(password_verify($password, $users['password']));
@@ -45,7 +46,8 @@ class Login_admin extends CI_Controller
             if ($users['status'] > 0) {
                 if (password_verify($password, $users['password'])) {
                     $data = [
-                        'email' => $users['email']
+                        'email' => $users['email'],
+                        'semester' => $semester
                     ];
                     $this->session->set_userdata($data);
                     redirect('dashboard');

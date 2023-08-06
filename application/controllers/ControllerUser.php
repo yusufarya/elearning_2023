@@ -232,12 +232,14 @@ class ControllerUser extends BaseController
             $error = array('gambar_kosong' => 'Gambar gagal di upload');
             $this->session->set_flashdata($error);
         } else {
-            $status = array('upload_data' => $this->upload->data());
+            $this->upload->data();
         }
         $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+
         $file_name = $upload_data['file_name'];
         $data['gambar'] = $file_name;
         if ($file_name) {
+            unlink("./assets/img/user/" . $post['oldFile']);
             $data['gambar'] = $file_name;
         }
 

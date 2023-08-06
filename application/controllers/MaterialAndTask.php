@@ -160,6 +160,7 @@ class MaterialAndTask extends BaseController
     function insertSchedule()
     {
         $cekSession = cekSession();
+        $kodeSemester = $this->session->userdata('semester');
         $post = $this->input->post(NULL, true);
         // pre($post);
         $hari = $post['hari'];
@@ -169,7 +170,7 @@ class MaterialAndTask extends BaseController
 
         $getScheduleExist = $this->db->get_where(
             'jadwal_pelajaran',
-            ['kode_pelajaran' => $kode_pelajaran, 'hari' => $hari]
+            ['kode_pelajaran' => $kode_pelajaran, 'hari' => $hari, 'semester' => $kodeSemester]
         )->num_rows();
 
         if ($getScheduleExist) {
@@ -180,6 +181,7 @@ class MaterialAndTask extends BaseController
         $data = [
             "hari" => $hari,
             "kode_pelajaran" => $kode_pelajaran,
+            'semester' => $kodeSemester,
             "jam_mulai" => $jam_mulai,
             "jam_selesai" => $jam_selesai,
             "dibuat_oleh" => $cekSession['nama'],
@@ -258,7 +260,7 @@ class MaterialAndTask extends BaseController
         $filterKelas = $this->input->post('kelas');
         $data['filterKelas'] = $filterKelas;
 
-        $data['pembahasan'] = $this->Master_model->listLearningMaterials();
+        $data['pembahasan'] = $this->Master_model->listLearningMaterials($filterKelas);
 
         $this->global['page_title'] = $data['title'] . '  · E-learning';
         $this->loadViewsAdmin('admin/data_pembahasan', $this->global, $data, NULL, TRUE);
@@ -290,40 +292,38 @@ class MaterialAndTask extends BaseController
         $cekSession = cekSession();
         $post = $this->input->post(NULL, true);
 
-        $data = [
+        $dataInsert = [
             'judul' => ucfirst($post['judul']),
             'pembahasan' => ucwords($post['pembahasan']),
             'tanggal' => $post['tanggal'],
             'link' => $post['link'],
             'kode_pelajaran' => $post['kode_pelajaran'],
             'pertemuan' => $post['pertemuan'],
+            'semester' => $this->session->userdata('semester'),
             "dibuat_oleh" => $cekSession['nama'],
             'tgl_dibuat' => date("Y-m-d")
         ];
 
-        $config['upload_path']          = './assets/img/doc/';
+        $config['upload_path']          = './assets/docfile/';
         $config['allowed_types']        = 'pdf|doc|docx';
         $config['max_size']             = 2048;
 
         $this->load->library('upload', $config);
 
-        if (!$_FILES['fileUpload']) {
+        if (!$this->upload->do_upload('uploadFile')) {
             $error = array('file_kosong' => 'File gagal di upload');
             $this->session->set_flashdata($error);
         } else {
             $status = array('upload_data' => $this->upload->data());
-            pre($this->upload->data());
         }
         $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
         $file_name = $upload_data['file_name'];
-        $data['file'] = $file_name;
+        $dataInsert['file'] = $file_name;
         if ($file_name) {
-            $data['file'] = $file_name;
+            $dataInsert['file'] = $file_name;
         }
 
-        die();
-
-        $result = $this->db->insert('materi', $data);
+        $result = $this->db->insert('materi', $dataInsert);
 
         if ($result) {
             redirect('listDiscussion');
@@ -356,37 +356,34 @@ class MaterialAndTask extends BaseController
         $cekSession = cekSession();
         $post = $this->input->post(NULL, true);
         $id = $post['id'];
+        $oldFile = $post['oldFile'];
 
-        $config['upload_path']          = './assets/img/doc/';
-        $config['allowed_types']        = 'pdf|doc|docx|jpeg|jpg';
-        $config['max_size']             = 1024;
+        $config['upload_path']          = './assets/docfile/';
+        $config['allowed_types']        = 'pdf|doc|docx';
+        $config['max_size']             = 2048;
 
         $dataUpdate = [
             'judul' => ucfirst($post['judul']),
             'pembahasan' => ucwords($post['pembahasan']),
             'link' => $post['link'],
-            "dibuat_oleh" => $cekSession['nama'],
-            'tgl_dibuat' => date("Y-m-d")
+            "update_oleh" => $cekSession['nama'],
+            'tgl_update' => date("Y-m-d")
         ];
 
         $this->load->library('upload', $config);
 
-        // $upload_data['file_name'] = ''; //Returns array of containing all of the data related to the file you uploaded.
-        if (!$this->upload->do_upload('fileName')) {
+        if (!$this->upload->do_upload('uploadFile')) {
             $error = array('file_kosong' => 'File gagal di upload');
             $this->session->set_flashdata($error);
         } else {
-            $this->upload->data();
+            $status = array('upload_data' => $this->upload->data());
         }
-        $upload_data = $this->upload->data();
-        pre($upload_data);
+        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
         $file_name = $upload_data['file_name'];
-        $dataUpdate['file'] = $file_name;
         if ($file_name) {
+            unlink("./assets/docfile/" . $oldFile);
             $dataUpdate['file'] = $file_name;
         }
-
-        die();
 
         $result = $this->db->update('materi', $dataUpdate, ['id' => $id]);
 
@@ -394,6 +391,16 @@ class MaterialAndTask extends BaseController
             redirect('listDiscussion');
         } else {
             die("Proses Gagal : Hubungi Administrator");
+        }
+    }
+
+    function deleteDiscuss()
+    {
+        $id = $this->input->post('id');
+
+        $result = $this->db->delete('materi', ['id' => $id]);
+        if ($result) {
+            redirect('listDiscussion');
         }
     }
 
@@ -408,9 +415,138 @@ class MaterialAndTask extends BaseController
         $filterKelas = $this->input->post('kelas');
         $data['filterKelas'] = $filterKelas;
 
-        $data['dataJadwal'] = $this->Master_model->listJadwal();
+        $data['dataJadwal'] = $this->Master_model->listTask();
 
         $this->global['page_title'] = $data['title'] . '  · E-learning';
         $this->loadViewsAdmin('admin/tugas_dan_penilaian', $this->global, $data, NULL, TRUE);
+    }
+
+    function addTask()
+    {
+        $cekSession = cekSession();
+
+        $data['me'] = $cekSession;
+        $data['title'] = 'Tambah Tugas';
+        $data['active'] = 'EVALUASI';
+
+        $data['kelas'] = $this->db->get('kelas')->result_array();
+
+        $this->global['page_title'] = $data['title'] . '  · E-learning';
+        $this->loadViewsAdmin('admin/addTugas', $this->global, $data, NULL, TRUE);
+    }
+
+    function insertTask()
+    {
+        $cekSession = cekSession();
+        $post = $this->input->post(NULL, true);
+
+        $dataInsert = [
+            'tugas' => ucfirst($post['tugas']),
+            'deskripsi' => ucwords($post['deskripsi']),
+            'kode_pelajaran' => $post['kode_pelajaran'],
+            'pertemuan' => $post['pertemuan'],
+            'semester' => $this->session->userdata('semester'),
+            "update_oleh" => $cekSession['nama'],
+            'tgl_update' => date("Y-m-d")
+        ];
+
+        $config['upload_path']          = './assets/docfile/';
+        $config['allowed_types']        = 'pdf|doc|docx';
+        $config['max_size']             = 2048;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('uploadFile')) {
+            $error = array('file_kosong' => 'File gagal di upload');
+            $this->session->set_flashdata($error);
+        } else {
+            $status = array('upload_data' => $this->upload->data());
+        }
+        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+        $file_name = $upload_data['file_name'];
+        $dataInsert['file'] = $file_name;
+        if ($file_name) {
+            $dataInsert['file'] = $file_name;
+        }
+
+        $result = $this->db->insert('tugas', $dataInsert);
+
+        if ($result) {
+            redirect('taskEvaluation');
+        } else {
+            die("Proses Gagal : Hubungi Administrator");
+        }
+    }
+
+    function editTask($id)
+    {
+        $cekSession = cekSession();
+
+        $data['me'] = $cekSession;
+        $data['title'] = 'Ubah Pembahasan';
+        $data['active'] = 'EVALUASI';
+
+        $this->db->select("t.*, kls.id AS kelas_id, mp.pelajaran AS mapel, kls.kelas AS kelass");
+        $this->db->from("tugas t");
+        $this->db->join("mata_pelajaran AS mp", "mp.kode = t.kode_pelajaran");
+        $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
+        $data_materi = $this->db->get_where('materi', ['t.id' => $id])->row_array();
+        $data['tugas'] = $data_materi;
+
+        $this->global['page_title'] = $data['title'] . '  · E-learning';
+        $this->loadViewsAdmin('admin/editTugas', $this->global, $data, NULL, TRUE);
+    }
+
+    function updateTask()
+    {
+        $cekSession = cekSession();
+        $post = $this->input->post(NULL, true);
+        $id = $post['id'];
+        $oldFile = $post['oldFile'];
+
+        $config['upload_path']          = './assets/docfile/';
+        $config['allowed_types']        = 'pdf|doc|docx';
+        $config['max_size']             = 2048;
+
+        $dataUpdate = [
+            'tugas' => ucfirst($post['tugas']),
+            'deskripsi' => ucwords($post['deskripsi']),
+            "update_oleh" => $cekSession['nama'],
+            'tgl_update' => date("Y-m-d")
+        ];
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('uploadFile')) {
+            $error = array('file_kosong' => 'File gagal di upload');
+            $this->session->set_flashdata($error);
+        } else {
+            $status = array('upload_data' => $this->upload->data());
+        }
+        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+        $file_name = $upload_data['file_name'];
+        if ($file_name) {
+            unlink("./assets/docfile/" . $oldFile);
+            $dataUpdate['file'] = $file_name;
+        }
+
+        $result = $this->db->update('tugas', $dataUpdate, ['id' => $id]);
+
+        if ($result) {
+            redirect('taskEvaluation');
+        } else {
+            die("Proses Gagal : Hubungi Administrator");
+        }
+    }
+
+
+    function deleteTask()
+    {
+        $id = $this->input->post('id');
+
+        $result = $this->db->delete('tugas', ['id' => $id]);
+        if ($result) {
+            redirect('taskEvaluation');
+        }
     }
 }

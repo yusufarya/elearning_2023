@@ -52,8 +52,8 @@ $level = $me['role_id'];
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th style="width: 10%;">Pertemuan</th>
-                        <th>Mata Pelajaran</th>
+                        <th class="text-center" style="width: 10%;">Pertemuan</th>
+                        <th>Pelajaran</th>
                         <th>Kelas</th>
                         <th>Judul</th>
                         <th>Pembahasan</th>
@@ -65,14 +65,16 @@ $level = $me['role_id'];
                     foreach ($data['pembahasan'] as $row) {
                     ?>
                         <tr>
-                            <td><?= $row['pertemuan'] ?></td>
+                            <td class="text-center">
+                                <div class="badge bg-info p-2"><?= $row['pertemuan'] ?></div>
+                            </td>
                             <td><?= $row['mapel'] ?></td>
                             <td><?= $row['kelass'] ?></td>
                             <td><?= $row['judul'] ?></td>
                             <td><?= substr($row['pembahasan'], 0, 157) ?>...</td>
                             <td style="text-align: center;">
                                 <a href="<?= base_url('editDiscussion/') . $row['id'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
-                                <a href="#" onclick="deleteJadwal(`<?= $row['id'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
+                                <a href="#" onclick="deleteMateri(`<?= $row['id'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
                             </td>
                         </tr>
                     <?php

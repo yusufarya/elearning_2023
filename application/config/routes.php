@@ -85,3 +85,8 @@ $route['addDiscussion'] = 'MaterialAndTask/addDiscussion';
 $route['editDiscussion/(:any)'] = 'MaterialAndTask/editDiscussion/$1';
 
 $route['taskEvaluation'] = 'MaterialAndTask/taskEvaluation';
+$route['addTask'] = 'MaterialAndTask/addTask';
+$route['editTask/(:any)'] = 'MaterialAndTask/editTask/$1';
+
+// LoginMurid //
+$route['login'] = 'LoginMurid';

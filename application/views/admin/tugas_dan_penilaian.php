@@ -23,7 +23,7 @@ $level = $me['role_id'];
         </div>
         <div class="col-md-6 d-flex flex-row-reverse">
             <div class="btn-toolbar mb-2 ">
-                <form action="<?= base_url('scheduleOfSubjects') ?>" method="post">
+                <form action="<?= base_url('taskEvaluation') ?>" method="post">
                     <select id="filter_kelas" name="kelas" class="form-select">
                         <option value="">- Filter kelas - </option>
                         <option value="">Semua</option>
@@ -35,8 +35,7 @@ $level = $me['role_id'];
                     </select>
                     <button id="submit" style="display: none;"> sadasd</button>
                 </form>
-                <a href="<?= base_url('previewSchedule') ?>" class="btn btn-warning mx-2">Preview</a>
-                <a href="<?= base_url('addSchedule') ?>" class="btn btn-info float-end"><b>+</b> Data</a>
+                <a href="<?= base_url('addTask') ?>" class="btn btn-info float-end ms-3"><b>+</b> Data</a>
             </div>
         </div>
     </div>
@@ -53,11 +52,11 @@ $level = $me['role_id'];
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th style="width: 10%;">Id Jadwal</th>
+                        <th style="width: 4%;">Id </th>
                         <th>Mata Pelajaran</th>
                         <th>Kelas</th>
-                        <th>Masuk</th>
-                        <th>Selesai</th>
+                        <th>Judul</th>
+                        <th>Status</th>
                         <th style="width:13%; text-align: center;">Aksi</th>
                     </tr>
                 </thead>
@@ -69,11 +68,11 @@ $level = $me['role_id'];
                             <td><?= $row['id'] ?></td>
                             <td><?= $row['mapel'] ?></td>
                             <td><?= $row['kelass'] ?></td>
-                            <td><?= $row['jam_mulai'] ?></td>
-                            <td><?= $row['jam_selesai'] ?></td>
+                            <td><?= $row['tugas'] ?></td>
+                            <td>status</td>
                             <td style="text-align: center;">
-                                <a href="<?= base_url('editSchedule/') . $row['id'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
-                                <a href="#" onclick="deleteJadwal(`<?= $row['id'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
+                                <a href="<?= base_url('editTask/') . $row['id'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
+                                <a href="#" onclick="deleteTask(`<?= $row['id'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
                             </td>
                         </tr>
                     <?php
@@ -98,7 +97,7 @@ $level = $me['role_id'];
                 <p></p>
             </div>
             <div class="modal-footer">
-                <form action="<?= base_url('MaterialAndTask/deleteDiscuss') ?>" method="post">
+                <form action="<?= base_url('MaterialAndTask/deleteTask') ?>" method="post">
                     <input type="hidden" id="id" name="id">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">&nbsp;Ya&nbsp;</button>
