@@ -90,3 +90,4 @@ $route['editTask/(:any)'] = 'MaterialAndTask/editTask/$1';
 
 // LoginMurid //
 $route['login'] = 'LoginMurid';
+$route['jadwal_pelajaran'] = 'ControllerMurid/jadwal_pelajaran';

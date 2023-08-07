@@ -156,7 +156,7 @@ CREATE TABLE `tugas` (
   `tugas` varchar(56) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
   `kelas_id` char(20) NOT NULL,
-  `pertemuan_id` int(11) NOT NULL,
+  `pertemuan` int(11) NOT NULL,
   `tgl_update` date NOT NULL,
   `update_oleh` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

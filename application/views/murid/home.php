@@ -35,7 +35,7 @@ $this->db->join("mata_pelajaran AS mp", "mp.kode = jp.kode_pelajaran");
 $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
 // $this->db->where('jp.hari', getCurrentDay(date('l')));
 $this->db->where('jp.hari', 'Senin');
-$this->db->where('semester', '01');
+$this->db->where('jp.semester', '01');
 $this->db->order_by('jp.id');
 $dataJadwal = $this->db->get()->result_array();
 

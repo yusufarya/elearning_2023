@@ -19,7 +19,7 @@ $cekLogin = $this->db->get()->row_array();
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Jadwal</a>
+                    <a class="nav-link" href="<?= base_url('jadwal_pelajaran') ?>">Jadwal</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Tugas & Penilaian</a>
