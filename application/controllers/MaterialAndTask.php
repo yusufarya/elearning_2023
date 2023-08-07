@@ -314,7 +314,7 @@ class MaterialAndTask extends BaseController
             $error = array('file_kosong' => 'File gagal di upload');
             $this->session->set_flashdata($error);
         } else {
-            $status = array('upload_data' => $this->upload->data());
+            $this->upload->data();
         }
         $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
         $file_name = $upload_data['file_name'];

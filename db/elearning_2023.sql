@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Agu 2023 pada 14.25
+-- Waktu pembuatan: 07 Agu 2023 pada 17.49
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.0.19
 
@@ -24,6 +24,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `jadwal_pelajaran` (
   `id` int(11) NOT NULL,
   `kode_pelajaran` varchar(100) NOT NULL,
+  `semester` char(2) DEFAULT '01',
   `hari` varchar(50) NOT NULL,
   `jam_mulai` time NOT NULL,
   `jam_selesai` time NOT NULL,
@@ -37,9 +38,9 @@ CREATE TABLE `jadwal_pelajaran` (
 -- Dumping data untuk tabel `jadwal_pelajaran`
 --
 
-INSERT INTO `jadwal_pelajaran` (`id`, `kode_pelajaran`, `hari`, `jam_mulai`, `jam_selesai`, `tgl_dibuat`, `dibuat_oleh`, `tgl_update`, `update_oleh`) VALUES
-(1, '00003', 'Senin', '09:00:00', '11:05:00', '2023-08-05', 'Admin', '2023-08-05', 'Admin'),
-(2, '00001', 'Senin', '08:00:00', '09:05:00', '2023-08-05', 'Admin', '2023-08-05', 'Admin');
+INSERT INTO `jadwal_pelajaran` (`id`, `kode_pelajaran`, `semester`, `hari`, `jam_mulai`, `jam_selesai`, `tgl_dibuat`, `dibuat_oleh`, `tgl_update`, `update_oleh`) VALUES
+(1, '00003', '01', 'Senin', '09:00:00', '11:05:00', '2023-08-05', 'Admin', '2023-08-05', 'Admin'),
+(2, '00001', '01', 'Senin', '08:00:00', '09:05:00', '2023-08-05', 'Admin', '2023-08-05', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -102,12 +103,21 @@ CREATE TABLE `materi` (
   `file` text NOT NULL,
   `link` varchar(50) NOT NULL,
   `kode_pelajaran` char(5) NOT NULL,
-  `pertemuan_id` int(11) NOT NULL,
+  `semester` char(2) DEFAULT '01',
+  `pertemuan` int(11) NOT NULL,
   `tgl_dibuat` date NOT NULL,
   `dibuat_oleh` varchar(50) NOT NULL,
   `tgl_update` date NOT NULL,
   `update_oleh` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `materi`
+--
+
+INSERT INTO `materi` (`id`, `judul`, `pembahasan`, `tanggal`, `file`, `link`, `kode_pelajaran`, `semester`, `pertemuan`, `tgl_dibuat`, `dibuat_oleh`, `tgl_update`, `update_oleh`) VALUES
+(1, 'Matematika Dasar I', 'Matematika Secara Umum Didefinisikan Sebagai Bidang Ilmu Yang Mempelajari Pola Dari Struktur, Perubahan Dan Ruang. Maka Secara Informal Dapat Juga Di Sebut Sebagai Ilmu Bilangan Dan Angka.', '2023-08-07', 'BAB_1_Proposal_Fachry_Riziq_Huseini_103454.pdf', '', '00003', '01', 1, '2023-08-07', 'Pak Pense', '2023-08-07', 'Pak Pense'),
+(2, 'Matematika Aljabar', 'Matematika Secara Umum Didefinisikan Sebagai Bidang Ilmu Yang Mempelajari Pola Dari Struktur, Perubahan Dan Ruang. Maka Secara Informal Dapat Juga Di Sebut Sebagai Ilmu Bilangan Dan Angka.', '2023-08-07', 'Laporan Rekapulasi.csv', '', '00003', '01', 2, '2023-08-07', 'Pak Pense', '2023-08-07', 'Pak Pense');
 
 -- --------------------------------------------------------
 
@@ -147,12 +157,32 @@ INSERT INTO `role` (`id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `semester`
+--
+
+CREATE TABLE `semester` (
+  `kode` char(2) NOT NULL,
+  `nama` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `semester`
+--
+
+INSERT INTO `semester` (`kode`, `nama`) VALUES
+('01', 'GANJIL'),
+('02', 'GENAP');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tugas`
 --
 
 CREATE TABLE `tugas` (
   `id` int(11) NOT NULL,
-  `kode_pelajaran` char(5) NOT NULL,
+  `materi_id` int(11) NOT NULL,
+  `semester` char(2) DEFAULT '01',
   `tugas` varchar(56) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
   `kelas_id` char(20) NOT NULL,
@@ -192,13 +222,13 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`nomor_identitas`, `nama`, `jenis_kel`, `tempat_lahir`, `tgl_lahir`, `no_telp`, `alamat`, `agama`, `kelas_id`, `mapel_id`, `email`, `password`, `gambar`, `status`, `role_id`, `tgl_dibuat`) VALUES
 ('', 'Admin', 'L', '', '0000-00-00', '087897551129', NULL, '', NULL, NULL, 'admin@gmail.com', '$2y$10$JWGHtWc6E92vPd50F/e24e8DzXJTKN7t9DlBN6pb6E6Gilgm/m6gW', NULL, 1, 1, '2023-07-29'),
-('IDS2307290002', 'Melisa ar', 'P', 'Jakarta, Indonesia', '2001-07-29', '087897551129', 'Jakarta, Indonesia', 'Islam', '1', '', 'mel@gmail.com', '111111', '', 1, 3, '2023-07-29'),
-('IDS2308050003', 'Erna lalajo erna', 'P', 'Tangerang Banten', '2006-08-05', '08987654321', 'Tangerang Banten', 'Islam', '1', '', 'erna@gmail.com', '111111', NULL, 1, 3, '2023-08-05'),
-('IDS2308050004', 'rudo roudo', 'L', 'Jakarta, Indonesia', '2007-12-11', '08299900000', 'Tangerang Banten', 'Islam', '2', '', 'rudo@gmail.com', '111111', '', 1, 3, '2023-08-05'),
-('IDS2308050005', 'Yusuf Aryadilla', 'L', '', '2023-08-05', '', 'Tangerang Banten', '', '2', '', 'arya', '111111', '', 1, 3, '2023-08-05'),
-('IDT2307290002', 'Pak Pense', 'L', 'Tangerang Banten', '1998-07-29', '08999999990', 'Jakarta, Indonesia', 'Islam', '', '00001', 'pens@gmail.com', '111111', '', 1, 2, '0000-00-00'),
-('IDT2308050003', 'Yusuf Aryadilla', 'L', '', '2023-08-05', '', 'Tangerang Banten', '', '', '', 'aryaherby29nov2k@gmail.com', '111111', '', 1, 2, '2023-08-05'),
-('IDT2308050004', 'Yas yaaaa', 'L', '', '2023-08-05', '08122346789', 'Tangerang Banten', '', '', '00003', 'yas@gmail.com', '111111', NULL, 1, 2, '2023-08-05');
+('IDS2307290002', 'Melisa ar', 'P', 'Jakarta, Indonesia', '2001-07-29', '087897551129', 'Jakarta, Indonesia', 'Islam', '1', '', 'mel@gmail.com', '$2y$10$azZLpCKhaBwW2RuDxynQCerNNe2WowtzP3QUMnCXh8eMALhBExmvG', '', 1, 3, '2023-07-29'),
+('IDS2308050003', 'Erna lalajo erna', 'P', 'Tangerang Banten', '2006-08-05', '08987654321', 'Tangerang Banten', 'Islam', '1', '', 'erna@gmail.com', '$2y$10$QzRjiTnspnTx5DGULqLXsulmqu34Y05.C0zDcQj/.DloYR3JjjjvC', '', 1, 3, '2023-08-05'),
+('IDS2308050004', 'rudo roudo', 'L', 'Jakarta, Indonesia', '2007-12-11', '08299900000', 'Tangerang Banten', 'Islam', '1', '', 'rudo@gmail.com', '$2y$10$otFjlO6uJiDqeGEya5DET.3AepiDFY6Ufmo4XTWuDta6itToANKci', '', 1, 3, '2023-08-05'),
+('IDS2308050005', 'Yusuf Aryadilla', 'L', '', '2023-08-05', '', 'Tangerang Banten', '', '1', '', 'arya@gmail.com', '$2y$10$4PaeagFVB4UYV83LaONKR.reg8Iy93h73hqg4PXYzOXXtPX1BaIAG', '', 1, 3, '2023-08-05'),
+('IDT2307290002', 'Pak Pense', 'L', 'Tangerang Banten', '1998-07-29', '08999999990', 'Jakarta, Indonesia', 'Islam', '', '00001', 'pens@gmail.com', '$2y$10$K.zChIj60Qjdix3n1Wak3e2FbBzPQvE4EbcZg/1G2KxUgaAeCUefu', '', 1, 2, '0000-00-00'),
+('IDT2308050003', 'Yusuf Aryadilla', 'L', '', '2023-08-05', '', 'Tangerang Banten', '', '', '00003', 'aryaherby29nov2k@gmail.com', '$2y$10$5Lv28XxwI9Qnp2TWhMeB.uDwaISRUfqsmpd3jQr0fXsD8A72f8xoC', '', 1, 2, '2023-08-05'),
+('IDT2308050004', 'Yas yaaaa', 'L', '', '2023-08-05', '08122346789', 'Tangerang Banten', '', '', '00003', 'yas@gmail.com', '$2y$10$8D63tRxoDrxr5N53apzqKulCaHCLUUWQKoiERYX986WhvSaNFmXlC', '', 1, 2, '2023-08-05');
 
 --
 -- Indexes for dumped tables
@@ -235,6 +265,12 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `semester`
+--
+ALTER TABLE `semester`
+  ADD PRIMARY KEY (`kode`);
+
+--
 -- Indeks untuk tabel `tugas`
 --
 ALTER TABLE `tugas`
@@ -266,7 +302,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT untuk tabel `materi`
 --
 ALTER TABLE `materi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `role`

@@ -64,4 +64,11 @@ class LoginMurid extends BaseController
             redirect('login');
         }
     }
+
+    public function logout()
+    {
+        $this->session->unset_userdata('email');
+        $this->session->set_flashdata('message', '<div class="alert alert-success py-1" role="alert">Anda telah logout.</div>');
+        redirect('login');
+    }
 }

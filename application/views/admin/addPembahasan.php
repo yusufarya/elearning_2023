@@ -78,7 +78,7 @@ $warning = $this->session->flashData('warning');
 
                         <div class="col-md-12 mb-3">
                             <label for="judul">Judul Pertemuan</label>
-                            <input type="text" maxlength="20" id="judul" name="judul" class="form-control" placeholder="Judul ..." required>
+                            <input type="text" maxlength="50" id="judul" name="judul" class="form-control" placeholder="Judul ..." required>
                         </div>
 
                         <div class="col-md-12 mb-3">

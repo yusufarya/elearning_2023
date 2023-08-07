@@ -228,6 +228,23 @@ function cekSessionUser()
     return $cekSession;
 }
 
+function cekSessionMurid()
+{
+    $CI = get_instance();
+    
+    $CI->db->select('users.*, role.role AS rolename, kls.kelas as kelass');
+    $CI->db->from('users');
+    $CI->db->join('role', 'role.id = users.role_id');
+    $CI->db->join("kelas AS kls", "kls.id = users.kelas_id");
+    $CI->db->where('users.email', $CI->session->userdata('email'));
+    $cekSession = $CI->db->get()->row_array();
+    if ($cekSession == '') {
+        $CI->session->set_flashdata('message', '<div class="alert alert-danger py-2" role="alert">Anda belum login.</div>');
+        redirect('login');
+    }
+    return $cekSession;
+}
+
 // ADD BY YUSUF
 function getNamaBulan($bulan)
 {

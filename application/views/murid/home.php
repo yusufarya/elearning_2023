@@ -32,12 +32,18 @@
 $this->db->select("jp.*, mp.pelajaran AS mapel, kls.kelas AS kelass");
 $this->db->from("jadwal_pelajaran jp");
 $this->db->join("mata_pelajaran AS mp", "mp.kode = jp.kode_pelajaran");
-$this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
-// $this->db->where('jp.hari', getCurrentDay(date('l')));
-$this->db->where('jp.hari', 'Senin');
+$this->db->join("kelas AS kls", "kls.id = mp.kelas_id"); 
+$this->db->where('jp.hari', getCurrentDay(date('l')));
 $this->db->where('jp.semester', '01');
 $this->db->order_by('jp.id');
 $dataJadwal = $this->db->get()->result_array();
+// pre($this->db->last_query());
+$this->db->select('users.*, role.role AS rolename, kls.kelas as kelass');
+$this->db->from('users');
+$this->db->join('role', 'role.id = users.role_id');
+$this->db->join("kelas AS kls", "kls.id = users.kelas_id");
+$this->db->where('users.email', $this->session->userdata('email'));
+$me = $this->db->get()->row_array(); 
 
 ?>
 
@@ -45,7 +51,19 @@ $dataJadwal = $this->db->get()->result_array();
     <section>
         <div class="home-banner" style="width: 100%;"></div>
         <div class="nav-home">
-            <h6 class="pt-2 mx-3"><?= getCurrentDay(date('l')); ?></h6>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-sm-6">
+                    <h6 class="pt-3"><?= getCurrentDay(date('l')) .', '.date('d/m/Y'); ?></h6>
+                </div>
+                <div class="col-md-5 col-sm-5 mr-3">
+                    <h6 style="float: right;" class="pt-3"><?= $cekLogin != '' ? 'Kelas &nbsp; '. $me['kelass'] : '' ?></h6>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <h4 class="alert alert-info text-center" style="width: 93%;">
+                    Hallo,👋 <?= $cekLogin != '' ? $me['nama'] : ' Selamat Datang' ?>
+                </h4>
+            </div>
         </div>
     </section>
     <section>
@@ -54,11 +72,11 @@ $dataJadwal = $this->db->get()->result_array();
         <?php if (!$cekLogin) { ?>
             <div class="alert alert-danger text-center" style="width: 50%; margin: 10px auto;">Anda Belum login, <a href="<?= base_url('login') ?>"> Login disini</a></div>
         <?php } else { ?>
-            <div class="mx-5 px-2 mt-2">
+            <div class="px-5 mt-2" style="width: 78%; margin: 10px auto;">
                 <h5>Jadwal Hari Ini</h5>
-                <table class="table table-responsive">
+                <table class="table table-bordered">
                     <tr>
-                        <th>No.</th>
+                        <th style="width: 4%;">ID</th>
                         <th>Pelajaran</th>
                         <th>Jam Mulai</th>
                         <th>Jam Selesai</th>
@@ -67,12 +85,12 @@ $dataJadwal = $this->db->get()->result_array();
 
                     <?php foreach ($dataJadwal as $row) { ?>
                         <tr>
-                            <td>1</td>
+                            <td><?= $row['id'] ?></td>
                             <td><?= $row['mapel'] ?></td>
                             <td><?= substr($row['jam_mulai'], 0, 5) ?></td>
                             <td><?= substr($row['jam_selesai'], 0, 5) ?></td>
                             <td class="text-center">
-                                <a href="<?= base_url('detailJadwal'); ?>">
+                                <a href="<?= base_url('detailJadwal/').$row['kode_pelajaran'] ?>">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square-fill" viewBox="0 0 16 16">
                                         <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.93 4.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                                     </svg>

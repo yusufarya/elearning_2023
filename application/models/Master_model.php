@@ -102,4 +102,16 @@ class Master_model extends CI_Model
         $result = $this->db->get()->result_array();
         return $result;
     }
+
+    function getDetailMapel($id) {
+        $this->db->select("m.*, mp.pelajaran, kls.kelas AS kelass");
+        $this->db->from("materi m"); 
+        $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
+        $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
+        $this->db->where('mp.kode', $id);
+        $this->db->order_by('m.pertemuan', 'ASC');
+        $result = $this->db->get()->result_array();
+        // pre($this->db->last_query()); die();
+        return $result;
+    }
 }

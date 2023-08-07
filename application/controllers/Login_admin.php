@@ -105,6 +105,7 @@ class Login_admin extends CI_Controller
             redirect('admin');
         }
     }
+    
     public function logout()
     {
         $this->session->unset_userdata('email');

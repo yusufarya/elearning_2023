@@ -80,7 +80,7 @@ $materi = $data['materi'];
 
                         <div class="col-md-12 mb-3">
                             <label for="judul">Judul Pertemuan</label>
-                            <input type="text" maxlength="20" id="judul" name="judul" class="form-control" placeholder="Judul ..." required value="<?= $materi['judul'] ?>">
+                            <input type="text" maxlength="50" id="judul" name="judul" class="form-control" placeholder="Judul ..." required value="<?= $materi['judul'] ?>">
                         </div>
 
                         <div class="col-md-12 mb-3">

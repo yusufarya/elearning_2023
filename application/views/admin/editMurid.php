@@ -67,7 +67,7 @@ $dataKelas = $data['kelas'];
                         <div class="col-md-4 mb-2">
                             <img src="<?= base_url('assets/img/user/') . $gambar ?>" alt="imgDef" style="width: 90%; margin: 0 5% -5px; padding: 0;" class="previewImg">
                             <input type="file" id="uploadedImage" name="gambar" class="form-control mt-3" style="width: 100%;">
-                            <input type="hidden" name="oldFile" value="<?= $materi['file'] ?>">
+                            <input type="hidden" name="oldFile" value="<?= $dataEdit['gambar'] ?>">
                         </div>
                         <br>
                         <hr>
