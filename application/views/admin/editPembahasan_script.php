@@ -1,5 +1,6 @@
 <script>
     $(function() {
+        const pembahasan = <?= json_encode($materi['pembahasan']) ?>;
         const thisValue = $("#kelas").val()
         getPelajaran(thisValue)
 
@@ -24,7 +25,7 @@
             }, 3600)
         })
 
-        $('#pembahasan').val('<?= json_encode($materi['pembahasan']) ?>')
+        $('#pembahasan').val(pembahasan)
     })
 
     function getPelajaran(thisValue) {

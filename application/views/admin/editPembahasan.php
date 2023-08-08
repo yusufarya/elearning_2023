@@ -100,7 +100,7 @@ $materi = $data['materi'];
 
                         <div class="col-md-12 mb-3">
                             <label for="link">Link &nbsp; <small class="text-success">(Opsional)</small></label>
-                            <input type="text" id="link" name="link" class="form-control" placeholder="/" autocomplete="off">
+                            <input type="text" id="link" name="link" class="form-control" placeholder="/" autocomplete="off" value="<?= $materi['link'] ?>">
                         </div>
 
                         <div class="col-md-8 mb-3"></div>

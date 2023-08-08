@@ -4,27 +4,27 @@
             const thisValue = $("#kelas").val()
 
             $('select#kode_pelajaran').empty()
-            $.ajax({
-                type: "POST",
-                dataType: "JSON",
-                url: "<?= base_url('MaterialAndTask/getSubjectByClass') ?>",
-                data: {
-                    kelas: thisValue
-                },
-                success: (result) => {
+            // $.ajax({
+            //     type: "POST",
+            //     dataType: "JSON",
+            //     url: "<?= base_url('MaterialAndTask/getSubjectByClass') ?>",
+            //     data: {
+            //         kelas: thisValue
+            //     },
+            //     success: (result) => {
 
-                    var row = '<option value="">- Pilih -</option>';
-                    for (let index = 0; index < result.length; index++) {
-                        const id = result[index]['kode'];
-                        const kelas = result[index]['kelass'];
-                        const pelajaran = result[index]['pelajaran'];
+            //         var row = '<option value="">- Pilih -</option>';
+            //         for (let index = 0; index < result.length; index++) {
+            //             const id = result[index]['kode'];
+            //             const kelas = result[index]['kelass'];
+            //             const pelajaran = result[index]['pelajaran'];
 
-                        row += `<option value="` + id + `">` + kelas + ` - ` + pelajaran + `</option>`
-                    }
+            //             row += `<option value="` + id + `">` + kelas + ` - ` + pelajaran + `</option>`
+            //         }
 
-                    $('select#kode_pelajaran').append(row)
-                }
-            })
+            //         $('select#kode_pelajaran').append(row)
+            //     }
+            // })
         })
 
         $('#pertemuan').on('focus', () => {

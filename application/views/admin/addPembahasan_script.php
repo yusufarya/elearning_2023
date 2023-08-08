@@ -1,5 +1,6 @@
 <script>
     $(function() {
+        const mapel_id = <?= json_encode($me['mapel_id']) ?>;
         $('#kelas').on('change', () => {
             const thisValue = $("#kelas").val()
 
@@ -23,6 +24,7 @@
                     }
 
                     $('select#kode_pelajaran').append(row)
+                    $('select#kode_pelajaran').val(mapel_id).change()
                 }
             })
         })

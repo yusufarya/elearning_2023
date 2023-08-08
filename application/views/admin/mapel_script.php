@@ -1,10 +1,10 @@
 <script>
-    function deleteMapel(nomor) {
+    function deleteMapel(kode) {
         $('#modalDelete').modal('show')
         $('h5.modal-title').text('Hapus Data ?')
-        $('.modal-body p').html('Anda yakin ingin menghapus data ' + '<b>' + nomor + '</b> ?')
+        $('.modal-body p').html('Anda yakin ingin menghapus data ' + '<b>' + kode + '</b> ?')
 
-        $('#modalDelete #nomor').val(nomor)
+        $('#modalDelete #kode').val(kode)
     }
 
     $('#filter_kelas').on('change', function() {

@@ -1,13 +1,14 @@
 <?php
 $data = json_decode(json_encode($pageInfo), True);
+$me = $data['me'];
 
-$dataMapel = $this->Master_model->getMapelAndKelas();
+$dataMateri = $this->Master_model->getDataMateri($me['mapel_id']);
 
 $dataKelas = $this->db->get('kelas')->result_array();
 
 $warning = $this->session->flashData('warning');
 
-$tugas = $data['tugas'];
+$tugas = $data['tugas']; 
 
 ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -65,8 +66,13 @@ $tugas = $data['tugas'];
 
                         <div class="col-md-7 mb-3">
                             <label for="pelajaran">Pelajaran</label>
-                            <select id="kode_pelajaran" name="kode_pelajaran" class="form-select" disabled>
+                            <select id="materi" name="materi" class="form-select" disabled>
                                 <option value="">- Pilih -</option>
+                                <?php foreach ($dataMateri as $mp) { ?>
+                                    <option value="<?= $mp['id'] ?>" <?= $tugas['materi_id'] == $mp['id'] ? 'selected' : '' ?>>
+                                        <?= $mp['kelass'] . ' - ' . $mp['judul'] ?>
+                                    </option>
+                                <?php } ?>
                             </select>
                         </div>
 
@@ -81,7 +87,7 @@ $tugas = $data['tugas'];
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label for="deskripsi">Deskripsi</label>
+                            <label for="deskripsi">Catatan</label>
                             <textarea type="text" rows="5" id="deskripsi" name="deskripsi" class="form-control" placeholder="Tambahkan text... " required></textarea>
                         </div>
 

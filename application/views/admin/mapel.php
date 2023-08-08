@@ -82,7 +82,7 @@ $datakelas = $this->db->get('kelas')->result_array();
             </div>
             <div class="modal-footer">
                 <form action="<?= base_url('MaterialAndTask/deleteMapel') ?>" method="post">
-                    <input type="hidden" id="nomor" name="nomor">
+                    <input type="hidden" id="kode" name="kode">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">&nbsp;Ya&nbsp;</button>
                 </form>

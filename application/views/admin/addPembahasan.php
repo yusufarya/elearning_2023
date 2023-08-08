@@ -1,6 +1,6 @@
 <?php
 $data = json_decode(json_encode($pageInfo), True);
-
+$me = $data['me'];
 $dataMapel = $this->Master_model->getMapelAndKelas();
 
 $dataKelas = $this->db->get('kelas')->result_array();
@@ -64,7 +64,7 @@ $warning = $this->session->flashData('warning');
                             <select id="kode_pelajaran" name="kode_pelajaran" class="form-select">
                                 <option value="">- Pilih -</option>
                                 <?php foreach ($dataMapel as $mp) { ?>
-                                    <option value="<?= $mp['kode'] ?>">
+                                    <option value="<?= $mp['kode'] ?>" <?= $me['mapel_id'] == $mp['kode'] ? 'selected' : '' ?>>
                                         <?= $mp['kelass'] . ' - ' . $mp['pelajaran'] ?>
                                     </option>
                                 <?php } ?>

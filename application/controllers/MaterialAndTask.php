@@ -443,7 +443,7 @@ class MaterialAndTask extends BaseController
         $dataInsert = [
             'tugas' => ucfirst($post['tugas']),
             'deskripsi' => ucwords($post['deskripsi']),
-            'kode_pelajaran' => $post['kode_pelajaran'],
+            'materi_id' => $post['materi'],
             'pertemuan' => $post['pertemuan'],
             'semester' => $this->session->userdata('semester'),
             "update_oleh" => $cekSession['nama'],
@@ -488,7 +488,8 @@ class MaterialAndTask extends BaseController
 
         $this->db->select("t.*, kls.id AS kelas_id, mp.pelajaran AS mapel, kls.kelas AS kelass");
         $this->db->from("tugas t");
-        $this->db->join("mata_pelajaran AS mp", "mp.kode = t.kode_pelajaran");
+        $this->db->join("materi AS m", "m.id = t.materi_id");
+        $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
         $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
         $data_materi = $this->db->get_where('materi', ['t.id' => $id])->row_array();
         $data['tugas'] = $data_materi;

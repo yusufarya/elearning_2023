@@ -91,7 +91,12 @@ $route['editTask/(:any)'] = 'MaterialAndTask/editTask/$1';
 // LoginMurid //
 $route['login'] = 'LoginMurid';
 $route['detailJadwal/(:any)'] = 'ControllerMurid/detailJadwal/$1';
+$route['detailPembahasan/(:any)'] = 'ControllerMurid/detailPembahasan/$1';
+$route['daftar_tugas/(:any)'] = 'ControllerMurid/daftar_tugas/$1';
+$route['uploadTugas/(:any)'] = 'ControllerMurid/uploadTugas/$1';
 $route['jadwal_pelajaran'] = 'ControllerMurid/jadwal_pelajaran';
 $route['penilaian_tugas'] = 'ControllerMurid/penilaian_tugas';
+
+$route['profile'] = 'ControllerMurid/profile';
 
 $route['logout_m'] = 'LoginMurid/logout';

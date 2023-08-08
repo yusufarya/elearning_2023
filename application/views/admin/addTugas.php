@@ -1,7 +1,8 @@
 <?php
 $data = json_decode(json_encode($pageInfo), True);
+$me = $data['me'];
 
-$dataMapel = $this->Master_model->getMapelAndKelas();
+$dataMateri = $this->Master_model->getDataMateri($me['mapel_id']);
 
 $dataKelas = $this->db->get('kelas')->result_array();
 
@@ -60,12 +61,12 @@ $warning = $this->session->flashData('warning');
                             </select>
                         </div>
                         <div class="col-md-7 mb-3">
-                            <label for="pelajaran">Pelajaran</label>
-                            <select id="kode_pelajaran" name="kode_pelajaran" class="form-select">
+                            <label for="materi">Materi</label>
+                            <select id="materi" name="materi" class="form-select">
                                 <option value="">- Pilih -</option>
-                                <?php foreach ($dataMapel as $mp) { ?>
-                                    <option value="<?= $mp['kode'] ?>">
-                                        <?= $mp['kelass'] . ' - ' . $mp['pelajaran'] ?>
+                                <?php foreach ($dataMateri as $mp) { ?>
+                                    <option value="<?= $mp['id'] ?>">
+                                        <?= $mp['kelass'] . ' - ' . $mp['judul'] ?>
                                     </option>
                                 <?php } ?>
                             </select>
@@ -77,7 +78,7 @@ $warning = $this->session->flashData('warning');
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label for="deskripsi">Deskripsi</label>
+                            <label for="deskripsi">Catatan</label>
                             <textarea type="text" rows="5" id="deskripsi" name="deskripsi" class="form-control" placeholder="Tambahkan text... " required></textarea>
                         </div>
 

@@ -164,6 +164,9 @@ $data = json_decode(json_encode($pageInfo), True);
                         Log out
                     </a>
                 </li>
+                <hr>
+                <br>
+                <br>
             </ul>
         </div>
     </div>

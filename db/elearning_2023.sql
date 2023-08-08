@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Agu 2023 pada 17.49
+-- Waktu pembuatan: 08 Agu 2023 pada 17.33
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.0.19
 
@@ -40,7 +40,9 @@ CREATE TABLE `jadwal_pelajaran` (
 
 INSERT INTO `jadwal_pelajaran` (`id`, `kode_pelajaran`, `semester`, `hari`, `jam_mulai`, `jam_selesai`, `tgl_dibuat`, `dibuat_oleh`, `tgl_update`, `update_oleh`) VALUES
 (1, '00003', '01', 'Senin', '09:00:00', '11:05:00', '2023-08-05', 'Admin', '2023-08-05', 'Admin'),
-(2, '00001', '01', 'Senin', '08:00:00', '09:05:00', '2023-08-05', 'Admin', '2023-08-05', 'Admin');
+(2, '00001', '01', 'Senin', '08:00:00', '09:05:00', '2023-08-05', 'Admin', '2023-08-05', 'Admin'),
+(6, '00008', '01', 'Selasa', '09:00:00', '10:05:00', '2023-08-08', 'Admin', '2023-08-08', 'Admin'),
+(7, '00006', '01', 'Selasa', '08:00:00', '09:05:00', '2023-08-08', 'Admin', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -84,10 +86,13 @@ CREATE TABLE `mata_pelajaran` (
 
 INSERT INTO `mata_pelajaran` (`kode`, `pelajaran`, `kelas_id`, `tgl_dibuat`, `dibuat_oleh`, `tgl_update`, `update_oleh`) VALUES
 ('00001', 'Bahasa Indonesia', 1, '2023-08-05', 'Admin', NULL, NULL),
-('00002', 'Bahasa Inggris', 4, '2023-08-05', 'Admin', NULL, NULL),
+('00002', 'Bahasa Inggris 2', 4, '2023-08-05', 'Admin', NULL, NULL),
 ('00003', 'Matematika I', 1, '2023-08-05', 'Admin', NULL, NULL),
 ('00004', 'Matematika II', 4, '2023-08-05', 'Admin', NULL, NULL),
-('00005', 'Bahasa Indonesia II', 4, '2023-08-05', 'Admin', NULL, NULL);
+('00005', 'Bahasa Indonesia II', 4, '2023-08-05', 'Admin', NULL, NULL),
+('00006', 'Penjaskes 1', 1, '2023-08-08', 'Admin', NULL, NULL),
+('00007', 'Penjaskes 2', 4, '2023-08-08', 'Admin', NULL, NULL),
+('00008', 'Bahasa Inggris', 1, '2023-08-08', 'Admin', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -116,8 +121,10 @@ CREATE TABLE `materi` (
 --
 
 INSERT INTO `materi` (`id`, `judul`, `pembahasan`, `tanggal`, `file`, `link`, `kode_pelajaran`, `semester`, `pertemuan`, `tgl_dibuat`, `dibuat_oleh`, `tgl_update`, `update_oleh`) VALUES
-(1, 'Matematika Dasar I', 'Matematika Secara Umum Didefinisikan Sebagai Bidang Ilmu Yang Mempelajari Pola Dari Struktur, Perubahan Dan Ruang. Maka Secara Informal Dapat Juga Di Sebut Sebagai Ilmu Bilangan Dan Angka.', '2023-08-07', 'BAB_1_Proposal_Fachry_Riziq_Huseini_103454.pdf', '', '00003', '01', 1, '2023-08-07', 'Pak Pense', '2023-08-07', 'Pak Pense'),
-(2, 'Matematika Aljabar', 'Matematika Secara Umum Didefinisikan Sebagai Bidang Ilmu Yang Mempelajari Pola Dari Struktur, Perubahan Dan Ruang. Maka Secara Informal Dapat Juga Di Sebut Sebagai Ilmu Bilangan Dan Angka.', '2023-08-07', 'Laporan Rekapulasi.csv', '', '00003', '01', 2, '2023-08-07', 'Pak Pense', '2023-08-07', 'Pak Pense');
+(1, 'Matematika Dasar I', 'Matematika Secara Umum Didefinisikan Sebagai Bidang Ilmu Yang Mempelajari Pola Dari Struktur, Perubahan Dan Ruang. Maka Secara Informal Dapat Juga Di Sebut Sebagai Ilmu Bilangan Dan Angka.', '2023-08-07', 'BAB_1_Proposal_Fachry_Riziq_Huseini_103454.pdf', '', '00003', '01', 1, '2023-08-07', 'Pak Pense', '2023-08-08', 'Yas yaaaa'),
+(2, 'Matematika Aljabar', 'Matematika Secara Umum Didefinisikan Sebagai Bidang Ilmu Yang Mempelajari Pola Dari Struktur, Perubahan Dan Ruang. Maka Secara Informal Dapat Juga Di Sebut Sebagai Ilmu Bilangan Dan Angka.', '2023-08-07', 'Laporan Rekapulasi.csv', '', '00003', '01', 2, '2023-08-07', 'Pak Pense', '2023-08-08', 'Yas yaaaa'),
+(3, 'Bahasa indonesia', 'Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Laborum Eos Delectus Maiores Minima Neque Nam Qui Saepe Aspernatur Porro Ipsa, Officia Eaque Facere Atque Animi Quaerat Adipisci Soluta Dolorem Nisi.', '2023-08-08', '', '', '00001', '01', 1, '2023-08-08', 'Pak Pense', '2023-08-08', 'Pak Pense'),
+(4, 'Bahasa Inggris Dasar', 'Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Beatae, Quibusdam Fugiat? Voluptatum Reprehenderit Perspiciatis Dolorem Dolores Maiores Provident Architecto Eum Ab! Asperiores Sint Fugiat Soluta Exercitationem. Saepe, Ex Exercitationem. Nihil.', '2023-08-08', 'bingris11.docx', '29digitect.com', '00008', '01', 1, '2023-08-08', 'Yas yaaaa', '2023-08-08', 'Yas yaaaa');
 
 -- --------------------------------------------------------
 
@@ -185,11 +192,19 @@ CREATE TABLE `tugas` (
   `semester` char(2) DEFAULT '01',
   `tugas` varchar(56) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
+  `file` text DEFAULT NULL,
   `kelas_id` char(20) NOT NULL,
   `pertemuan` int(11) NOT NULL,
   `tgl_update` date NOT NULL,
   `update_oleh` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tugas`
+--
+
+INSERT INTO `tugas` (`id`, `materi_id`, `semester`, `tugas`, `deskripsi`, `file`, `kelas_id`, `pertemuan`, `tgl_update`, `update_oleh`) VALUES
+(1, 4, '01', 'English Task 1', 'Tugas Bhs Ingris', 'bingris1.docx', '', 1, '2023-08-08', 'Yas yaaaa');
 
 -- --------------------------------------------------------
 
@@ -228,7 +243,7 @@ INSERT INTO `users` (`nomor_identitas`, `nama`, `jenis_kel`, `tempat_lahir`, `tg
 ('IDS2308050005', 'Yusuf Aryadilla', 'L', '', '2023-08-05', '', 'Tangerang Banten', '', '1', '', 'arya@gmail.com', '$2y$10$4PaeagFVB4UYV83LaONKR.reg8Iy93h73hqg4PXYzOXXtPX1BaIAG', '', 1, 3, '2023-08-05'),
 ('IDT2307290002', 'Pak Pense', 'L', 'Tangerang Banten', '1998-07-29', '08999999990', 'Jakarta, Indonesia', 'Islam', '', '00001', 'pens@gmail.com', '$2y$10$K.zChIj60Qjdix3n1Wak3e2FbBzPQvE4EbcZg/1G2KxUgaAeCUefu', '', 1, 2, '0000-00-00'),
 ('IDT2308050003', 'Yusuf Aryadilla', 'L', '', '2023-08-05', '', 'Tangerang Banten', '', '', '00003', 'aryaherby29nov2k@gmail.com', '$2y$10$5Lv28XxwI9Qnp2TWhMeB.uDwaISRUfqsmpd3jQr0fXsD8A72f8xoC', '', 1, 2, '2023-08-05'),
-('IDT2308050004', 'Yas yaaaa', 'L', '', '2023-08-05', '08122346789', 'Tangerang Banten', '', '', '00003', 'yas@gmail.com', '$2y$10$8D63tRxoDrxr5N53apzqKulCaHCLUUWQKoiERYX986WhvSaNFmXlC', '', 1, 2, '2023-08-05');
+('IDT2308050004', 'Yas yaaaa', 'L', '', '2023-08-05', '08122346789', 'Tangerang Banten', '', '', '00008', 'yas@gmail.com', '$2y$10$8D63tRxoDrxr5N53apzqKulCaHCLUUWQKoiERYX986WhvSaNFmXlC', '', 1, 2, '2023-08-05');
 
 --
 -- Indexes for dumped tables
@@ -290,7 +305,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `jadwal_pelajaran`
 --
 ALTER TABLE `jadwal_pelajaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `kelas`
@@ -302,7 +317,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT untuk tabel `materi`
 --
 ALTER TABLE `materi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `role`
@@ -314,5 +329,5 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT untuk tabel `tugas`
 --
 ALTER TABLE `tugas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;

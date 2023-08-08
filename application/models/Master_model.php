@@ -65,6 +65,21 @@ class Master_model extends CI_Model
         return $result;
     }
 
+    function getDataMateri($kode_pelajaran = '')
+    {
+        $this->db->select("m.*, kls.kelas AS kelass");
+        $this->db->from("materi m");
+        $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
+        $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
+        if ($kode_pelajaran) {
+
+            $this->db->where(['mp.kode' => $kode_pelajaran]);
+        }
+        $this->db->order_by('kls.kelas');
+        $result = $this->db->get()->result_array();
+        return $result;
+    }
+
     function listLearningMaterials($filterKelas = '')
     {
         $semester = $this->session->userdata('semester');
@@ -94,22 +109,48 @@ class Master_model extends CI_Model
         }
         $this->db->select("t.*, mp.pelajaran AS mapel, kls.kelas AS kelass");
         $this->db->from("tugas t");
-        $this->db->join("mata_pelajaran AS mp", "mp.kode = t.kode_pelajaran");
+        $this->db->join("materi AS m", "m.id = t.materi_id");
+        $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
         $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
         $this->db->where($where);
-        $this->db->where('semester', $semester);
+        $this->db->where('t.semester', $semester);
         $this->db->order_by('t.pertemuan, t.id', 'DESC');
         $result = $this->db->get()->result_array();
         return $result;
     }
 
-    function getDetailMapel($id) {
+    function getDetailMapel($kode) {
         $this->db->select("m.*, mp.pelajaran, kls.kelas AS kelass");
         $this->db->from("materi m"); 
         $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
         $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
-        $this->db->where('mp.kode', $id);
+        $this->db->where('mp.kode', $kode);
         $this->db->order_by('m.pertemuan', 'ASC');
+        $result = $this->db->get()->result_array();
+        // pre($this->db->last_query()); die();
+        return $result;
+    }
+
+    function getDetailPembahasan($id) {
+        $this->db->select("m.*, mp.pelajaran, kls.kelas AS kelass");
+        $this->db->from("materi m"); 
+        $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
+        $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
+        $this->db->where('m.id', $id);
+        $this->db->order_by('m.pertemuan', 'ASC');
+        $result = $this->db->get()->row_array();
+        // pre($this->db->last_query()); die();
+        return $result;
+    }
+
+    function daftarTugas($id) {
+        $this->db->select("t.*, mp.pelajaran, kls.kelas AS kelass, m.judul ");
+        $this->db->from("tugas t"); 
+        $this->db->join("materi AS m", "m.id = t.materi_id");
+        $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
+        $this->db->join("kelas AS kls", "kls.id = mp.kelas_id"); 
+        $this->db->where('t.materi_id', $id);
+        $this->db->order_by('m.id', 'ASC');
         $result = $this->db->get()->result_array();
         // pre($this->db->last_query()); die();
         return $result;

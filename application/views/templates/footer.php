@@ -24,3 +24,25 @@
             </ul> -->
     </footer>
 </div>
+
+
+<!-- modalLogoout -->
+
+<div class="modal fade" id="modalLogoout" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header my-0 py-2 bg-info text-white">
+        <h5 class="modal-title my-0">Anda yakin ingin logout ?</h5> 
+      </div>
+      <!-- <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div> -->
+      <div class="modal-footer">
+        <form action="<?= base_url('logout_m') ?>" method="post">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+          <button type="submit" class="btn btn-info">&nbsp;Ya&nbsp;</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

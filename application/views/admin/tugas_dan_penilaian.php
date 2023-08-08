@@ -23,19 +23,21 @@ $level = $me['role_id'];
         </div>
         <div class="col-md-6 d-flex flex-row-reverse">
             <div class="btn-toolbar mb-2 ">
-                <form action="<?= base_url('taskEvaluation') ?>" method="post">
-                    <select id="filter_kelas" name="kelas" class="form-select">
-                        <option value="">- Filter kelas - </option>
-                        <option value="">Semua</option>
-                        <?php foreach ($datakelas as $kls) { ?>
-                            <option value="<?= $kls['id'] ?>" <?= $filterKelas == $kls['id'] ? "selected" : "" ?>>
-                                <?= $kls['kelas'] ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                    <button id="submit" style="display: none;"> sadasd</button>
-                </form>
-                <a href="<?= base_url('addTask') ?>" class="btn btn-info float-end ms-3"><b>+</b> Data</a>
+                <?php if($level == 2) { ?>
+                    <form action="<?= base_url('taskEvaluation') ?>" method="post">
+                        <select id="filter_kelas" name="kelas" class="form-select">
+                            <option value="">- Filter kelas - </option>
+                            <option value="">Semua</option>
+                            <?php foreach ($datakelas as $kls) { ?>
+                                <option value="<?= $kls['id'] ?>" <?= $filterKelas == $kls['id'] ? "selected" : "" ?>>
+                                    <?= $kls['kelas'] ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                        <button id="submit" style="display: none;"> sadasd</button>
+                    </form>
+                    <a href="<?= base_url('addTask') ?>" class="btn btn-info float-end ms-3"><b>+</b> Data</a>
+                <?php } ?>
             </div>
         </div>
     </div>
