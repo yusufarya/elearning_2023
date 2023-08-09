@@ -1,6 +1,7 @@
 <?php
 $data = json_decode(json_encode($pageInfo), True);
-
+$me = $data['me'];
+$level = $me['role_id'];
 ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -23,7 +24,9 @@ $data = json_decode(json_encode($pageInfo), True);
                     <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
                 </div> -->
-                <a href="<?= base_url('addClassData') ?>" class="btn btn-info float-end"><b>+</b> Data</a>
+                <?php if ($level == 1) { ?>
+                    <a href="<?= base_url('addClassData') ?>" class="btn btn-info float-end"><b>+</b> Data</a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -32,22 +35,27 @@ $data = json_decode(json_encode($pageInfo), True);
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th style="width: 10%;">ID. Kelas</th>
-                    <th>Nama Kelas</th> 
-                    <th style="width:13%; text-align: center;">Aksi</th>
+                    <th style="width: 10%;">No.</th>
+                    <th>Kelas</th>
+                    <?php if ($level == 1) { ?>
+                        <th style="width:13%; text-align: center;">Aksi</th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
                 <?php
+                $no = 1;
                 foreach ($data['dataKelas'] as $row) {
                 ?>
                     <tr>
-                        <td><?= $row['id'] ?></td>
+                        <td><?= $no++ ?></td>
                         <td><?= $row['kelas'] ?></td>
-                        <td style="text-align: center;">
-                            <a href="<?= base_url('editClassData/') . $row['id'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
-                            <a href="#" onclick="deleteKelas(`<?= $row['id'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
-                        </td>
+                        <?php if ($level == 1) { ?>
+                            <td style="text-align: center;">
+                                <a href="<?= base_url('editClassData/') . $row['id'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
+                                <a href="#" onclick="deleteKelas(`<?= $row['id'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
+                            </td>
+                        <?php } ?>
                     </tr>
                 <?php
                 }

@@ -119,9 +119,10 @@ class Master_model extends CI_Model
         return $result;
     }
 
-    function getDetailMapel($kode) {
+    function getDetailMapel($kode)
+    {
         $this->db->select("m.*, mp.pelajaran, kls.kelas AS kelass");
-        $this->db->from("materi m"); 
+        $this->db->from("materi m");
         $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
         $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
         $this->db->where('mp.kode', $kode);
@@ -131,9 +132,10 @@ class Master_model extends CI_Model
         return $result;
     }
 
-    function getDetailPembahasan($id) {
+    function getDetailPembahasan($id)
+    {
         $this->db->select("m.*, mp.pelajaran, kls.kelas AS kelass");
-        $this->db->from("materi m"); 
+        $this->db->from("materi m");
         $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
         $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
         $this->db->where('m.id', $id);
@@ -143,16 +145,31 @@ class Master_model extends CI_Model
         return $result;
     }
 
-    function daftarTugas($id) {
+    function daftarTugas($id)
+    {
         $this->db->select("t.*, mp.pelajaran, kls.kelas AS kelass, m.judul ");
-        $this->db->from("tugas t"); 
+        $this->db->from("tugas t");
         $this->db->join("materi AS m", "m.id = t.materi_id");
         $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
-        $this->db->join("kelas AS kls", "kls.id = mp.kelas_id"); 
+        $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
         $this->db->where('t.materi_id', $id);
         $this->db->order_by('m.id', 'ASC');
         $result = $this->db->get()->result_array();
         // pre($this->db->last_query()); die();
+        return $result;
+    }
+
+    function listTugasPenilaian()
+    {
+        $this->db->select("nt.*, mp.pelajaran, kls.kelas AS kelass, m.judul ");
+        $this->db->from("nilai_tugas nt");
+        $this->db->join("tugas AS t", "t.id = nt.tugas_id");
+        $this->db->join("materi AS m", "m.id = t.materi_id");
+        $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
+        $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
+        $result = $this->db->get()->result_array();
+        // pre($this->db->last_query());
+        // die();
         return $result;
     }
 }

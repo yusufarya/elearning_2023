@@ -1,6 +1,7 @@
 <?php
 $data = json_decode(json_encode($pageInfo), True);
-
+$me = $data['me'];
+$level = $me['role_id'];
 ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -30,8 +31,10 @@ $data = json_decode(json_encode($pageInfo), True);
             <h2><?= $data['title'] ?></h2>
         </div>
         <div class="col-md-3 d-flex flex-row-reverse">
-            <div class="btn-toolbar mb-2 "> 
-                <a href="<?= base_url('addTeacher') ?>" class="btn btn-info float-end"><b>+</b> Data</a>
+            <div class="btn-toolbar mb-2 ">
+                <?php if ($level == 1) { ?>
+                    <a href="<?= base_url('addTeacher') ?>" class="btn btn-info float-end"><b>+</b> Data</a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -41,11 +44,14 @@ $data = json_decode(json_encode($pageInfo), True);
             <thead>
                 <tr>
                     <th style="width: 14%;">Nomor Identitas</th>
-                    <th >Nama</th>
-                    <th >Jenis Kelamin</th>
-                    <th >No. Telp</th>
-                    <th >Pelajaran</th>
-                    <th style="width:13%; text-align: center;">Aksi</th>
+                    <th>Nama</th>
+                    <th>Jenis Kelamin</th>
+                    <th>No. Telp</th>
+                    <th>Pelajaran</th>
+                    <th>Email</th>
+                    <?php if ($level == 1) { ?>
+                        <th style="width:13%; text-align: center;">Aksi</th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -58,10 +64,13 @@ $data = json_decode(json_encode($pageInfo), True);
                         <td><?= $row['jenis_kel'] == "L" ? "Laki-laki" : "Perempuan" ?></td>
                         <td><?= $row['no_telp'] ?></td>
                         <td><?= $row['mapel'] ?></td>
-                        <td style="text-align: center;">
-                            <a href="<?= base_url('editTeacher/') . $row['nomor_identitas'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
-                            <a href="#" onclick="deleteTeacher(`<?= $row['nomor_identitas'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
-                        </td>
+                        <td><?= $row['email'] ?></td>
+                        <?php if ($level == 1) { ?>
+                            <td style="text-align: center;">
+                                <a href="<?= base_url('editTeacher/') . $row['nomor_identitas'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
+                                <a href="#" onclick="deleteTeacher(`<?= $row['nomor_identitas'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
+                            </td>
+                        <?php } ?>
                     </tr>
                 <?php
                 }

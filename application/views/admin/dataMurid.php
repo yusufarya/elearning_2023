@@ -1,7 +1,8 @@
 <?php
 $data = json_decode(json_encode($pageInfo), True);
 $datakelas = $this->db->get('kelas')->result_array();
-
+$me = $data['me'];
+$level = $me['role_id'];
 ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -33,7 +34,10 @@ $datakelas = $this->db->get('kelas')->result_array();
                         <button id="submit" style="display: none;"> sadasd</button>
                     </form>
                 </div>
-                <a href="<?= base_url('addStudent') ?>" class="btn btn-info float-end"><b>+</b> Data</a>
+
+                <?php if ($level == 1) { ?>
+                    <a href="<?= base_url('addStudent') ?>" class="btn btn-info float-end"><b>+</b> Data</a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -47,7 +51,10 @@ $datakelas = $this->db->get('kelas')->result_array();
                     <th>Jenis Kelamin</th>
                     <th>Kelas</th>
                     <th>No. Telp</th>
-                    <th style="width:13%; text-align: center;">Aksi</th>
+                    <th>Email</th>
+                    <?php if ($level == 1) { ?>
+                        <th style="width:13%; text-align: center;">Aksi</th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -60,10 +67,13 @@ $datakelas = $this->db->get('kelas')->result_array();
                         <td><?= $row['jenis_kel'] == "L" ? "Laki-laki" : "Perempuan" ?></td>
                         <td><?= $row['kelass'] ?></td>
                         <td><?= $row['no_telp'] ?></td>
-                        <td style="text-align: center;">
-                            <a href="<?= base_url('editStudent/') . $row['nomor_identitas'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
-                            <a href="#" onclick="deleteMurid(`<?= $row['nomor_identitas'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
-                        </td>
+                        <td><?= $row['email'] ?></td>
+                        <?php if ($level == 1) { ?>
+                            <td style="text-align: center;">
+                                <a href="<?= base_url('editStudent/') . $row['nomor_identitas'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
+                                <a href="#" onclick="deleteMurid(`<?= $row['nomor_identitas'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
+                            </td>
+                        <?php } ?>
                     </tr>
                 <?php
                 }

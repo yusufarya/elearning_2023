@@ -131,7 +131,7 @@
         </form>
     </main>
 
-    <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
 
     <!-- <script type="module" src="<?= base_url('assets/js/jquery-3.7.0.js') ?>"></script> -->
 </body>

@@ -23,7 +23,7 @@ $level = $me['role_id'];
         </div>
         <div class="col-md-6 d-flex flex-row-reverse">
             <div class="btn-toolbar mb-2 ">
-                <?php if($level == 2) { ?>
+                <?php if ($level == 2) { ?>
                     <form action="<?= base_url('taskEvaluation') ?>" method="post">
                         <select id="filter_kelas" name="kelas" class="form-select">
                             <option value="">- Filter kelas - </option>
@@ -68,7 +68,11 @@ $level = $me['role_id'];
                     ?>
                         <tr>
                             <td><?= $row['id'] ?></td>
-                            <td><?= $row['mapel'] ?></td>
+                            <td>
+                                <a href="<?= base_url('daftarTugas/') . $row['materi_id'] ?>">
+                                    <?= $row['mapel'] ?>
+                                </a>
+                            </td>
                             <td><?= $row['kelass'] ?></td>
                             <td><?= $row['tugas'] ?></td>
                             <td>status</td>
