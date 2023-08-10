@@ -13,9 +13,9 @@ class MaterialAndTask extends BaseController
         $data['title'] = 'Mata Pelajaran';
         $data['active'] = 'MAPEL';
 
-        $filterKelas = $this->input->post('kelas');
+        $data['filterKelas'] = $this->input->post('kelas');
 
-        $data['dataUser'] = $this->Master_model->listMapel($filterKelas);
+        $data['dataUser'] = $this->Master_model->listMapel($data['filterKelas']);
 
         $this->global['page_title'] = $data['title'] . '  · E-learning';
         $this->loadViewsAdmin('admin/mapel', $this->global, $data, NULL, TRUE);
@@ -491,7 +491,7 @@ class MaterialAndTask extends BaseController
         $this->db->join("materi AS m", "m.id = t.materi_id");
         $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
         $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
-        $data_materi = $this->db->get_where('materi', ['t.id' => $id])->row_array();
+        $data_materi = $this->db->get_where('', ['t.id' => $id])->row_array();
         $data['tugas'] = $data_materi;
 
         $this->global['page_title'] = $data['title'] . '  · E-learning';
@@ -540,7 +540,6 @@ class MaterialAndTask extends BaseController
         }
     }
 
-
     function deleteTask()
     {
         $id = $this->input->post('id');
@@ -549,5 +548,44 @@ class MaterialAndTask extends BaseController
         if ($result) {
             redirect('taskEvaluation');
         }
+    }
+
+    function detailTask($tugas_id) 
+    {
+        $cekSession = cekSession();
+
+        $data['me'] = $cekSession;
+        $data['title'] = 'Tugas';
+        $data['active'] = 'EVALUASI';
+
+        $this->db->select("nt.*, kls.id AS kelas_id, t.tugas, mp.pelajaran AS mapel, kls.kelas AS kelass, us.nama AS murid");
+        $this->db->from("nilai_tugas nt");
+        $this->db->join("users AS us", "us.nomor_identitas = nt.nomor_identitas");
+        $this->db->join("tugas AS t", "t.id = nt.tugas_id");
+        $this->db->join("materi AS m", "m.id = t.materi_id");
+        $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
+        $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
+        $this->db->where(['nt.tugas_id' => $tugas_id]);
+        $dataResult = $this->db->get()->result_array();
+        // pre($this->db->last_query());
+        $data['tugas'] = $dataResult;
+
+        $this->global['page_title'] = $data['title'] . '  · E-learning';
+        $this->loadViewsAdmin('admin/detailTugas', $this->global, $data, NULL, TRUE);
+    }
+    
+    function updateNilai()
+    {
+        $post = $this->input->post(NULL);
+        
+        $tugasId = $post['tugasId'];
+        $id = $post['id'];
+        $nilai = $post['nilai'];
+
+        $this->db->set('nilai', $nilai);
+        $this->db->where('id', $id);
+        $this->db->update('nilai_tugas');
+
+        redirect('detailTask/'.$tugasId);
     }
 }

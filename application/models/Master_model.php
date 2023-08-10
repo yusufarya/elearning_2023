@@ -8,7 +8,7 @@ class Master_model extends CI_Model
         if ($filterKelas) {
             $where = ['mp.kelas_id' => $filterKelas];
         } else {
-            $where = ['mp.kelas_id <>' => $filterKelas];
+            $where = ['mp.kelas_id' => $filterKelas];
         }
         $result = $this->db->select("mp.*, kls.kelas AS kelass")
             ->from('mata_pelajaran mp')
@@ -24,7 +24,7 @@ class Master_model extends CI_Model
         if ($filterKelas) {
             $where = ['mp.kelas_id' => $filterKelas];
         } else {
-            $where = ['mp.kelas_id <>' => $filterKelas];
+            $where = ['mp.kelas_id' => $filterKelas];
         }
         $this->db->select("jp.*, mp.pelajaran AS mapel, kls.kelas AS kelass");
         $this->db->from("jadwal_pelajaran jp");
@@ -93,7 +93,7 @@ class Master_model extends CI_Model
         $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
         $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
         $this->db->where($where);
-        $this->db->where('semester', $semester);
+        $this->db->where('m.semester', $semester);
         $this->db->order_by('m.pertemuan, m.id', 'DESC');
         $result = $this->db->get()->result_array();
         return $result;
@@ -159,17 +159,24 @@ class Master_model extends CI_Model
         return $result;
     }
 
-    function listTugasPenilaian()
+    function listTugasPenilaian($mapel)
     {
+        $semester = $this->session->userdata('semester');
+        if ($mapel) {
+            $where = ['mp.kode' => $mapel];
+        } else {
+            $where = ['mp.kode <>' => $mapel];
+        }
         $this->db->select("nt.*, mp.pelajaran, kls.kelas AS kelass, m.judul ");
         $this->db->from("nilai_tugas nt");
         $this->db->join("tugas AS t", "t.id = nt.tugas_id");
         $this->db->join("materi AS m", "m.id = t.materi_id");
         $this->db->join("mata_pelajaran AS mp", "mp.kode = m.kode_pelajaran");
         $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
+        $this->db->where($where);
+        $this->db->where('m.semester', $semester);
         $result = $this->db->get()->result_array();
-        // pre($this->db->last_query());
-        // die();
+        // pre($this->db->last_query());die();
         return $result;
     }
 }

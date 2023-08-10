@@ -3,6 +3,7 @@ $data = json_decode(json_encode($pageInfo), True);
 $datakelas = $this->db->get('kelas')->result_array();
 $me = $data['me'];
 $level = $me['role_id'];
+$filterKelas = $data['filterKelas'];
 ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -25,10 +26,10 @@ $level = $me['role_id'];
                     <form action="<?= base_url('listSubjects') ?>" method="post">
                         <select id="filter_kelas" name="kelas" class="form-select">
                             <option value="">- Filter kelas - </option>
-                            <option value="">Semua</option>
+                            <!-- <option value="">Semua</option> -->
                             <?php foreach ($datakelas as $kls) { ?>
-                                <option value="<?= $kls['id'] ?>">
-                                    <?= $kls['kelas'] ?>
+                                <option value="<?= $kls['id'] ?>" <?= $kls['id'] == $filterKelas ? 'selected' : '' ?>>
+                                    Kelas <?= $kls['kelas'] ?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -58,7 +59,8 @@ $level = $me['role_id'];
             </thead>
             <tbody>
                 <?php
-                foreach ($data['dataUser'] as $row) {
+                if($filterKelas) {
+                    foreach ($data['dataUser'] as $row) { 
                 ?>
                     <tr>
                         <td><?= $row['kode'] ?></td>
@@ -72,7 +74,14 @@ $level = $me['role_id'];
                         <?php } ?>
                     </tr>
                 <?php
-                }
+                    }
+                } else { ?>
+                    <tr>
+                        <td colspan="4">
+                            <div class="bg-warning py-2 text-center">Pilih Kelas Terlebih Dahulu</div>
+                        </td>
+                    </tr>
+                <?php }
                 ?>
             </tbody>
         </table>

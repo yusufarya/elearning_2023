@@ -2,10 +2,10 @@
 <style>
     .home-banner {
         /* The image used */
-        background-image: url("<?= base_url('assets/img/bg-school.JPG') ?>");
+        background-image: url("<?= base_url('assets/img/bg-home.JPG') ?>");
 
         /* Set a specific height */
-        min-height: 400px;
+        min-height: 440px;
 
         /* Create the parallax scrolling effect */
         background-attachment: fixed;
@@ -103,3 +103,6 @@ $me = $this->db->get()->row_array();
         <?php } ?>
     </section>
 </div>
+
+
+<?php unset($_SESSION['message']); ?>

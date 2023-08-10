@@ -10,3 +10,9 @@
         })
     })
 </script>
+
+<script>
+    $('#mapel').on('change', function() {
+        $('button#submit').click()
+    })
+</script>

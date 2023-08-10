@@ -1,10 +1,10 @@
 <?php
-$data = json_decode(json_encode($pageInfo), True);
-$datakelas = $this->db->get('kelas')->result_array();
-$filterKelas = $data['filterKelas'];
-
+$data = json_decode(json_encode($pageInfo), True); 
 $me = $data['me'];
 $level = $me['role_id'];
+
+$getUri = $this->uri->segment(2);
+
 ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -19,26 +19,12 @@ $level = $me['role_id'];
 
     <div class="row">
         <div class="col-md-6">
-            <h2><?= $data['title'] ?></h2>
+            <h4><?= $data['title'] ?> Siswa/i</h4>
         </div>
-        <div class="col-md-6 d-flex flex-row-reverse">
-            <div class="btn-toolbar mb-2 ">
-                <?php if ($level == 2) { ?>
-                    <form action="<?= base_url('taskEvaluation') ?>" method="post">
-                        <select id="filter_kelas" name="kelas" class="form-select">
-                            <option value="">- Filter kelas - </option>
-                            <option value="">Semua</option>
-                            <?php foreach ($datakelas as $kls) { ?>
-                                <option value="<?= $kls['id'] ?>" <?= $filterKelas == $kls['id'] ? "selected" : "" ?>>
-                                    <?= $kls['kelas'] ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                        <button id="submit" style="display: none;"> sadasd</button>
-                    </form>
-                    <a href="<?= base_url('addTask') ?>" class="btn btn-info float-end ms-3"><b>+</b> Data</a>
-                <?php } ?>
-            </div>
+        <div class="col-md-6">
+            <a href="<?= base_url('taskEvaluation') ?>" class="btn btn-sm btn-secondary" style="float: right;">
+                < Kembali 
+            </a>
         </div>
     </div>
 
@@ -55,30 +41,33 @@ $level = $me['role_id'];
                 <thead>
                     <tr>
                         <th style="width: 4%;">Id </th>
+                        <th>Nama Siswa/i</th>
                         <th>Mata Pelajaran</th>
                         <th>Kelas</th>
                         <th>Judul</th>
-                        <!-- <th>Status</th> -->
-                        <th style="width:13%; text-align: center;">Aksi</th>
+                        <th>File Tugas</th>
+                        <th class="text-center">Nilai</th>
+                        <th style="width:10%; text-align: center;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($data['dataJadwal'] as $row) {
+                    foreach ($data['tugas'] as $row) {
                     ?>
                         <tr>
-                            <td><?= $row['id'] ?></td>
-                            <td>
-                                <a href="<?= base_url('detailTask/') . $row['id'] ?>">
-                                    <?= ucwords($row['mapel']) ?>
-                                </a>
-                            </td>
+                            <td><?= $row['id'] ?></td> 
+                            <td><?= $row['murid'] ?></td>
+                            <td><?= $row['mapel'] ?></td>
                             <td><?= $row['kelass'] ?></td>
                             <td><?= $row['tugas'] ?></td>
-                            <!-- <td>status</td> -->
+                            <td><a href="<?= base_url('assets/docfile/').substr($row['file'], 5, strlen($row['file'])) ?>">Lihat Tugas</a></td>
+                            <td class="<?= $row['nilai'] ? 'text-center' : 'text-center bg-danger text-white' ?>">
+                                <?= $row['nilai'] ? $row['nilai'] : 'Belum dinilai' ?>
+                            </td>
                             <td style="text-align: center;">
-                                <a href="<?= base_url('editTask/') . $row['id'] ?>" class="btn btn-sm btn-success py-0 px-1 text-decoration-none">Ubah</a> &nbsp;
-                                <a href="#" onclick="deleteTask(`<?= $row['id'] ?>`)" class="btn btn-sm btn-danger py-0 px-1 text-decoration-none">Hapus</a>
+                            <button type="button" class="btn btn-info btn-sm" onclick="Penilaian(`<?= $row['id'] ?>`, `<?= $row['murid'] ?>`)">
+                                Beri nilai
+                            </button>
                             </td>
                         </tr>
                     <?php
@@ -92,23 +81,31 @@ $level = $me['role_id'];
 
 </main>
 
-<div class="modal fade" id="modalDelete" tabindex="-1">
+<div class="modal fade" id="modal_penilaian" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p></p>
-            </div>
-            <div class="modal-footer">
-                <form action="<?= base_url('MaterialAndTask/deleteTask') ?>" method="post">
-                    <input type="hidden" id="id" name="id">
+            <form action="<?= base_url('MaterialAndTask/updateNilai') ?>" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <label for="Nilai">Nilai</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input type="hidden" name="tugasId" value="<?= $getUri ?>">
+                            <input type="hidden" name="id" id="id" >
+                            <input type="text" class="form-control" name="nilai" id="nilai" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer"> 
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">&nbsp;Ya&nbsp;</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

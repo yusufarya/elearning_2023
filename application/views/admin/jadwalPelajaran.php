@@ -23,17 +23,17 @@ $filterKelas = $data['filterKelas'];
                 <form action="<?= base_url('scheduleOfSubjects') ?>" method="post">
                     <select id="filter_kelas" name="kelas" class="form-select">
                         <option value="">- Filter kelas - </option>
-                        <option value="">Semua</option>
+                        <!-- <option value="">Semua</option> -->
                         <?php foreach ($datakelas as $kls) { ?>
                             <option value="<?= $kls['id'] ?>" <?= $filterKelas == $kls['id'] ? "selected" : "" ?>>
-                                <?= $kls['kelas'] ?>
+                                Kelas <?= $kls['kelas'] ?>
                             </option>
                         <?php } ?>
                     </select>
-                    <button id="submit" style="display: none;"> sadasd</button>
+                    <button id="submit" style="display: none;"> </button>
                 </form>
                 <a href="<?= base_url('previewSchedule') ?>" class="btn btn-warning mx-2">Preview</a>
-                <a href="<?= base_url('addSchedule') ?>" class="btn btn-info float-end"><b>+</b> Data</a>
+                <a href="<?= base_url('addSchedule') ?>" class="btn btn-info float-end"><b>+</b> Jadwal</a>
             </div>
         </div>
     </div>
@@ -52,6 +52,7 @@ $filterKelas = $data['filterKelas'];
             </thead>
             <tbody>
                 <?php
+                if($filterKelas) {
                 foreach ($data['dataJadwal'] as $row) {
                 ?>
                     <tr>
@@ -67,7 +68,13 @@ $filterKelas = $data['filterKelas'];
                     </tr>
                 <?php
                 }
-                ?>
+                } else { ?>
+                <tr>
+                    <td colspan="6">
+                        <div class="bg-warning py-2 text-center">Pilih Kelas Terlebih Dahulu</div>
+                    </td>
+                </tr>
+                <?php }?>
             </tbody>
         </table>
     </div>

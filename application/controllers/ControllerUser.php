@@ -193,8 +193,8 @@ class ControllerUser extends BaseController
         $agama = $post['agama'];
         $alamat = $post['alamat'];
         $no_telp = $post['no_telp'];
-        $password = $post['password'];
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        $pwd = $post['password'];
+        $password = password_hash($pwd, PASSWORD_DEFAULT);
 
         if ($type == 'guru') {
             $mapel_id = $post['mapel_id'];
@@ -222,7 +222,7 @@ class ControllerUser extends BaseController
             // "password" => $password,
         ];
 
-        if ($password) {
+        if ($pwd) {
             $data['password'] = $password;
         }
 

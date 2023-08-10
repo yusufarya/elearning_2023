@@ -88,6 +88,8 @@ $route['taskEvaluation'] = 'MaterialAndTask/taskEvaluation';
 $route['addTask'] = 'MaterialAndTask/addTask';
 $route['editTask/(:any)'] = 'MaterialAndTask/editTask/$1';
 
+$route['detailTask/(:any)'] = 'MaterialAndTask/detailTask/$1';
+
 // LoginMurid //
 $route['login'] = 'LoginMurid';
 $route['detailJadwal/(:any)'] = 'ControllerMurid/detailJadwal/$1';

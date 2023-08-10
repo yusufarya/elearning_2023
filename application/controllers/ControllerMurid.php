@@ -141,7 +141,9 @@ class ControllerMurid extends BaseController
         $data['title'] = 'Tugas dan Penilaian';
         $data['active'] = 'TUGAS';
 
-        $data['penilaian_tugas'] = $this->Master_model->listTugasPenilaian($data['me']['kelas_id']);
+        $data['filter_mapel'] = $this->input->post('mapel');
+
+        $data['penilaian_tugas'] = $this->Master_model->listTugasPenilaian($data['filter_mapel']);
 
         $this->global['page_title'] = $data['title'] . ' · E-learning';
         $this->loadViews('murid/tugas_penilaian', $this->global, $data, NULL, TRUE);

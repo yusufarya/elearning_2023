@@ -3,19 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Agu 2023 pada 17.58
+-- Waktu pembuatan: 10 Agu 2023 pada 17.30
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `elearning_2023`
@@ -49,7 +43,8 @@ INSERT INTO `jadwal_pelajaran` (`id`, `kode_pelajaran`, `semester`, `hari`, `jam
 (2, '00001', '01', 'Senin', '08:00:00', '09:05:00', '2023-08-05', 'Admin', '2023-08-05', 'Admin'),
 (6, '00008', '01', 'Selasa', '09:00:00', '10:05:00', '2023-08-08', 'Admin', '2023-08-08', 'Admin'),
 (7, '00006', '01', 'Selasa', '08:00:00', '09:05:00', '2023-08-08', 'Admin', NULL, NULL),
-(8, '00010', '01', 'Rabu', '08:00:00', '09:05:00', '2023-08-09', 'Pak Pense', NULL, NULL);
+(8, '00010', '01', 'Rabu', '08:00:00', '09:05:00', '2023-08-09', 'Pak Pense', NULL, NULL),
+(9, '00011', '01', 'Kamis', '09:00:00', '10:05:00', '2023-08-10', 'Admin', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -101,7 +96,8 @@ INSERT INTO `mata_pelajaran` (`kode`, `pelajaran`, `kelas_id`, `tgl_dibuat`, `di
 ('00007', 'Penjaskes 2', 4, '2023-08-08', 'Admin', NULL, NULL),
 ('00008', 'Bahasa Inggris', 1, '2023-08-08', 'Admin', NULL, NULL),
 ('00009', 'Sejarah', 1, '2023-08-09', 'Pak Pense', NULL, NULL),
-('00010', 'Sosiologi', 1, '2023-08-09', 'Pak Pense', NULL, NULL);
+('00010', 'Sosiologi', 1, '2023-08-09', 'Pak Pense', NULL, NULL),
+('00011', 'kimia 1', 1, '2023-08-10', 'Admin', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -134,7 +130,8 @@ INSERT INTO `materi` (`id`, `judul`, `pembahasan`, `tanggal`, `file`, `link`, `k
 (2, 'Matematika Aljabar', 'Matematika Secara Umum Didefinisikan Sebagai Bidang Ilmu Yang Mempelajari Pola Dari Struktur, Perubahan Dan Ruang. Maka Secara Informal Dapat Juga Di Sebut Sebagai Ilmu Bilangan Dan Angka.', '2023-08-07', 'Laporan Rekapulasi.csv', '', '00003', '01', 2, '2023-08-07', 'Pak Pense', '2023-08-08', 'Yas yaaaa'),
 (3, 'Bahasa indonesia', 'Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Laborum Eos Delectus Maiores Minima Neque Nam Qui Saepe Aspernatur Porro Ipsa, Officia Eaque Facere Atque Animi Quaerat Adipisci Soluta Dolorem Nisi.', '2023-08-08', '', '', '00001', '01', 1, '2023-08-08', 'Pak Pense', '2023-08-08', 'Pak Pense'),
 (4, 'Bahasa Inggris Dasar', 'Lorem Ipsum Dolor Sit Amet Consectetur, Adipisicing Elit. Beatae, Quibusdam Fugiat? Voluptatum Reprehenderit Perspiciatis Dolorem Dolores Maiores Provident Architecto Eum Ab! Asperiores Sint Fugiat Soluta Exercitationem. Saepe, Ex Exercitationem. Nihil.', '2023-08-08', 'bingris11.docx', '29digitect.com', '00008', '01', 1, '2023-08-08', 'Yas yaaaa', '2023-08-08', 'Yas yaaaa'),
-(5, 'Dasar Sosiologi', 'Apa Yang Dimaksud Dengan Sosiologi?\r\nSosiologi Adalah Ilmu Yang Menyelidiki Tentang Susunan-susunan Dan Proses Kehidupan Social Sebagai Suatu Keseluruhan / Suatu Sistem.', '2023-08-09', 'Sosiologi2.pdf', '', '00010', '01', 1, '2023-08-09', 'Sosogi', '0000-00-00', '');
+(5, 'Dasar Sosiologi', 'Apa Yang Dimaksud Dengan Sosiologi?\r\nSosiologi Adalah Ilmu Yang Menyelidiki Tentang Susunan-susunan Dan Proses Kehidupan Social Sebagai Suatu Keseluruhan / Suatu Sistem.', '2023-08-09', 'Sosiologi2.pdf', '', '00010', '01', 1, '2023-08-09', 'Sosogi', '0000-00-00', ''),
+(7, 'Kimia dasar', 'Materi Tentang Apa Itu Kimia?\r\nKimia Merupakan Ilmu Tentang Materi, Sifatnya, Strukturnya, Perubahan/reaksinya Serta Energi Yang Menyertai Perubahan Tersebut. Kimia Secara Khusus Dibagi Menjadi Beberapa Bidang Utama, Yaitu: Kimia Analisis, Kimia Organik, Kimia Anorganik, Kimia Fisik, Dan Biokimia.', '2023-08-10', '', 'link-materikimia.com', '00011', '01', 1, '2023-08-10', 'Kim yea', '0000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -157,7 +154,8 @@ CREATE TABLE `nilai_tugas` (
 --
 
 INSERT INTO `nilai_tugas` (`id`, `nomor_identitas`, `tugas_id`, `nilai`, `file`, `tgl_update`, `update_oleh`) VALUES
-(1, 'IDS2308050005', 2, NULL, 'tugasSosiologi8.pdf', '2023-08-09', 'Yusuf Aryadilla');
+(1, 'IDS2308050005', 2, 89, 'tugasSosiologi8.pdf', '2023-08-09', 'Yusuf Aryadilla'),
+(2, 'IDS2308050005', 3, 80, 'tugaskimia_(1).docx', '2023-08-10', 'Yusuf Aryadilla');
 
 -- --------------------------------------------------------
 
@@ -223,7 +221,8 @@ CREATE TABLE `tugas` (
 
 INSERT INTO `tugas` (`id`, `materi_id`, `semester`, `tugas`, `deskripsi`, `file`, `kelas_id`, `pertemuan`, `tgl_update`, `update_oleh`) VALUES
 (1, 4, '01', 'English Task 1', 'Tugas Bhs Ingris', 'bingris1.docx', '', 1, '2023-08-08', 'Yas yaaaa'),
-(2, 5, '01', 'Sosiologi tugas 1', 'Terakhir Minggu Depan,\r\nSilahkan Download File Untuk Melihat Tugas', 'Sosiologi3.pdf', '', 1, '2023-08-09', 'Sosogi');
+(2, 5, '01', 'Sosiologi tugas 1', 'Terakhir Minggu Depan,\r\nSilahkan Download File Untuk Melihat Tugas', 'Sosiologi3.pdf', '', 1, '2023-08-09', 'Sosogi'),
+(3, 7, '01', 'Tugas kimia pert 1', '\r\nKimia Merupakan Ilmu Tentang Materi, Sifatnya, Strukturnya, Perubahan/reaksinya Serta Energi Yang Menyertai Perubahan Tersebut.  ', 'kimia.docx', '', 1, '2023-08-10', 'Kim yea');
 
 -- --------------------------------------------------------
 
@@ -263,7 +262,8 @@ INSERT INTO `users` (`nomor_identitas`, `nama`, `jenis_kel`, `tempat_lahir`, `tg
 ('IDT2307290002', 'Pak Pense', 'L', 'Tangerang Banten', '1998-07-29', '08999999990', 'Jakarta, Indonesia', 'Islam', '', '00001', 'pens@gmail.com', '$2y$10$K.zChIj60Qjdix3n1Wak3e2FbBzPQvE4EbcZg/1G2KxUgaAeCUefu', '', 1, 2, '0000-00-00'),
 ('IDT2308050003', 'Yusuf Aryadilla', 'L', '', '2023-08-05', '', 'Tangerang Banten', '', '', '00003', 'aryaherby29nov2k@gmail.com', '$2y$10$5Lv28XxwI9Qnp2TWhMeB.uDwaISRUfqsmpd3jQr0fXsD8A72f8xoC', '', 1, 2, '2023-08-05'),
 ('IDT2308050004', 'Yas yaaaa', 'L', '', '2023-08-05', '08122346789', 'Tangerang Banten', '', '', '00008', 'yas@gmail.com', '$2y$10$8D63tRxoDrxr5N53apzqKulCaHCLUUWQKoiERYX986WhvSaNFmXlC', '', 1, 2, '2023-08-05'),
-('IDT2308090005', 'Sosogi', 'L', 'Bandung', '1998-08-09', '087897551129', '', '', '', '00010', 'sosogi@gmail.com', '$2y$10$g7sr5sSNguhTy3CGeboxCep1tVN9X8QHsHE.A/ZVzmHAt0f2gZN/e', NULL, 1, 2, '2023-08-09');
+('IDT2308090005', 'Sosogi', 'L', 'Bandung', '1998-08-09', '087897551129', '', '', '', '00010', 'sosogi@gmail.com', '$2y$10$g7sr5sSNguhTy3CGeboxCep1tVN9X8QHsHE.A/ZVzmHAt0f2gZN/e', NULL, 1, 2, '2023-08-09'),
+('IDT2308100006', 'Kim yea', 'P', 'Jakarta, Indonesia', '1989-08-10', '', 'Tangerang Banten', '', '', '00011', 'gurukimia@gmail.com', '$2y$10$cOAqe4LdEwXw3stJp17XMeNWMS7DxNeA8yC/jjtDhVmX85mcJg/uK', '', 1, 2, '2023-08-10');
 
 --
 -- Indexes for dumped tables
@@ -331,7 +331,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `jadwal_pelajaran`
 --
 ALTER TABLE `jadwal_pelajaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `kelas`
@@ -343,13 +343,13 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT untuk tabel `materi`
 --
 ALTER TABLE `materi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `nilai_tugas`
 --
 ALTER TABLE `nilai_tugas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `role`
@@ -361,9 +361,5 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT untuk tabel `tugas`
 --
 ALTER TABLE `tugas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
