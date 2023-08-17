@@ -87,6 +87,11 @@ $warning = $this->session->flashData('warning');
                             <input type="file" id="uploadFile" name="uploadFile" class="form-control">
                         </div>
 
+                        <div class="col-md-5 mb-3">
+                            <label for="tugas">Batas Pengumpulan</label>
+                            <input type="date" name="batas_tugas" id="batas_tugas" class="form-control" value="<?= date('Y-m-d') ?>" required>
+                        </div>
+
                         <div class="col-md-8 mb-3"></div>
                         <div class="col-md-4 mb-3">
                             <label>&nbsp;</label>

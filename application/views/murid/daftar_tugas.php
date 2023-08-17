@@ -12,7 +12,7 @@ $message = $this->session->flashData('message');
     <br>
     <h4 class="p-3 shadow-sm rounded"><?= $data['title'] . ' - ' . $mata_pelajaran ?></h4>
     <a href="#" onclick="history.back()" class="text-decoration-none me-2 text-info" style="font-family: monospace; float: right;">
-        < Kembali ke pembahasan</a><br>
+        < Kembali ke pembahasan </a><br>
             <hr class="mx-3">
 
             <section class="mx-3">
@@ -32,12 +32,24 @@ $message = $this->session->flashData('message');
                                     <?= $tugas['deskripsi'] ?>
                                 </div>
                                 <div class="row justify-content-around">
+                                    <div class="col-md-12">
+                                        <small class="mx-3 text-danger">
+                                            <i>Batas Pengumpulan : <?= date('d-m-Y', strtotime($tugas['batas_tugas'])) ?></i>
+                                        </small>
+                                    </div>
                                     <div class="col">
-                                        <small class="mx-3"><i>Updated : <?= $tugas['tgl_update'] ?></i></small>
+                                        <small class="mx-3"><i>Updated : <?= date('d-m-Y', strtotime($tugas['tgl_update'])) ?></i></small>
                                     </div>
                                     <div class="col me-2 text-end">
 
                                         <?php
+                                        $date_now = date_create(date('d-m-Y'));
+                                        $date_end = date_create(date('d-m-Y', strtotime($tugas['batas_tugas'])));
+                                        $diff = date_diff($date_now, $date_end);
+                                        if ((floatval($diff->format("%R%a")) >= 0)) {
+                                        } else {
+                                            pre("<p class='text-danger'>Batas Pengumpulan berakhir</p>");
+                                        }
                                         $cekTuguas = $this->db->get_where(
                                             'nilai_tugas',
                                             ['tugas_id' => $tugas['id']]
@@ -51,9 +63,21 @@ $message = $this->session->flashData('message');
                                                 </svg>
                                                 Download Tugas
                                             </a> |
-                                            <a href="<?= base_url('uploadTugas/') . $tugas['id'] ?>" class="btn btn-sm btn-outline-success" style="font-size: 15px; ">
-                                                Serahkan Tugas
-                                            </a>
+                                            <?php
+                                            if ((floatval($diff->format("%R%a")) >= 0)) {
+                                            ?>
+                                                <a href="<?= base_url('uploadTugas/') . $tugas['id'] ?>" class="btn btn-sm btn-outline-success" style="font-size: 15px; ">
+                                                    Serahkan Tugas
+                                                </a>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <a href="#" class="btn btn-sm btn-outline-success" style="font-size: 15px; ">
+                                                    <s>Serahkan Tugas</s>
+                                                </a>
+                                            <?php
+                                            }
+                                            ?>
                                         <?php } else { ?>
                                             <button class="btn btn-outline-success btn-sm" disabled>Selesai ✔️</button>
                                         <?php } ?>

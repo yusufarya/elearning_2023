@@ -447,6 +447,7 @@ class MaterialAndTask extends BaseController
             'pertemuan' => $post['pertemuan'],
             'semester' => $this->session->userdata('semester'),
             "update_oleh" => $cekSession['nama'],
+            'batas_tugas' => date("Y-m-d", strtotime($post['batas_tugas'])),
             'tgl_update' => date("Y-m-d")
         ];
 
@@ -513,6 +514,7 @@ class MaterialAndTask extends BaseController
             'tugas' => ucfirst($post['tugas']),
             'deskripsi' => ucwords($post['deskripsi']),
             "update_oleh" => $cekSession['nama'],
+            'batas_tugas' => date("Y-m-d", strtotime($post['batas_tugas'])),
             'tgl_update' => date("Y-m-d")
         ];
 
@@ -550,7 +552,7 @@ class MaterialAndTask extends BaseController
         }
     }
 
-    function detailTask($tugas_id) 
+    function detailTask($tugas_id)
     {
         $cekSession = cekSession();
 
@@ -573,11 +575,11 @@ class MaterialAndTask extends BaseController
         $this->global['page_title'] = $data['title'] . '  · E-learning';
         $this->loadViewsAdmin('admin/detailTugas', $this->global, $data, NULL, TRUE);
     }
-    
+
     function updateNilai()
     {
         $post = $this->input->post(NULL);
-        
+
         $tugasId = $post['tugasId'];
         $id = $post['id'];
         $nilai = $post['nilai'];
@@ -586,6 +588,6 @@ class MaterialAndTask extends BaseController
         $this->db->where('id', $id);
         $this->db->update('nilai_tugas');
 
-        redirect('detailTask/'.$tugasId);
+        redirect('detailTask/' . $tugasId);
     }
 }

@@ -8,7 +8,7 @@ $dataKelas = $this->db->get('kelas')->result_array();
 
 $warning = $this->session->flashData('warning');
 
-$tugas = $data['tugas']; 
+$tugas = $data['tugas'];
 
 ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -82,7 +82,7 @@ $tugas = $data['tugas'];
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label for="tugas">Judul Pertemuan</label>
+                            <label for="tugas">Judul Tugas</label>
                             <input type="text" maxlength="50" id="tugas" name="tugas" class="form-control" placeholder="Judul ..." required value="<?= $tugas['tugas'] ?>">
                         </div>
 
@@ -99,6 +99,11 @@ $tugas = $data['tugas'];
                         <div class="col-md-7 mb-3">
                             <label for="uploadFile">Doc file</label>
                             <a href="<?= base_url('assets/docfile/') . $tugas['file'] ?>" class="d-block"><?= $tugas['file'] ?></a>
+                        </div>
+
+                        <div class="col-md-5 mb-3">
+                            <label for="tugas">Batas Pengumpulan</label>
+                            <input type="date" name="batas_tugas" id="batas_tugas" class="form-control" value="<?= $tugas['batas_tugas'] ? date('Y-m-d', strtotime($tugas['batas_tugas'])) : '0000-00-00' ?>" required>
                         </div>
 
                         <div class="col-md-8 mb-3"></div>
