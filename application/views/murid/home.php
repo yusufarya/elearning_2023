@@ -36,15 +36,18 @@ $this->db->join("kelas AS kls", "kls.id = users.kelas_id");
 $this->db->where('users.email', $this->session->userdata('email'));
 $me = $this->db->get()->row_array();
 
-$this->db->select("jp.*, mp.pelajaran AS mapel, kls.kelas AS kelass");
-$this->db->from("jadwal_pelajaran jp");
-$this->db->join("mata_pelajaran AS mp", "mp.kode = jp.kode_pelajaran");
-$this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
-$this->db->where('jp.hari', getCurrentDay(date('l')));
-$this->db->where('mp.kelas_id', $me['kelas_id']);
-$this->db->where('jp.semester', $this->session->userdata('semester'));
-$this->db->order_by('jp.id');
-$dataJadwal = $this->db->get()->result_array();
+if ($me) {
+    $this->db->select("jp.*, mp.pelajaran AS mapel, kls.kelas AS kelass");
+    $this->db->from("jadwal_pelajaran jp");
+    $this->db->join("mata_pelajaran AS mp", "mp.kode = jp.kode_pelajaran");
+    $this->db->join("kelas AS kls", "kls.id = mp.kelas_id");
+    $this->db->where('jp.hari', getCurrentDay(date('l')));
+    $this->db->where('mp.kelas_id', $me['kelas_id']);
+    $this->db->where('jp.semester', $this->session->userdata('semester'));
+    $this->db->order_by('jp.id');
+    $dataJadwal = $this->db->get()->result_array();
+}
+
 // pre($this->db->last_query());
 
 ?>
